@@ -116,13 +116,17 @@ let SetaddressPage = class SetaddressPage {
         this.nav = nav;
         this.loadingController = loadingController;
         this.platform = platform;
+        this.MyLocation = [];
         this.lat = localStorage.getItem('current_lat') ? localStorage.getItem('current_lat') : 0;
         this.lng = localStorage.getItem('current_lng') ? localStorage.getItem('current_lng') : 0;
     }
     ngOnInit() {
     }
     ionViewWillEnter() {
+        this.admin = JSON.parse(localStorage.getItem('admin'));
         this.autocomplete = { input: '' };
+        this.searchQuery = null;
+        this.hasSearch = false;
         this.autocompleteItems = [];
         this.platform.ready().then(() => {
             if (google) {
@@ -134,55 +138,23 @@ let SetaddressPage = class SetaddressPage {
         this.server.getAllAdress(localStorage.getItem('user_id')).subscribe((response) => {
             this.address = response.data;
         });
-        this.getAddressFromCoords(this.lat, this.lng);
-        // // Obtenemos la ubicación actual
-        // this.geolocation.getCurrentPosition().then((resp) => {
-        //   this.lat = resp.coords.latitude;
-        //   this.lng = resp.coords.longitude;
-        // }).catch((error) => {
-        //   console.log('Error al obtener la ubicación', error);
-        // });
+        // Obtenemos la ubicación actual
+        this.geolocation.getCurrentPosition().then((resp) => {
+            this.lat = resp.coords.latitude;
+            this.lng = resp.coords.longitude;
+            this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
+        }).catch((error) => {
+            console.log('Error al obtener la ubicación', error);
+        });
     }
     getAddressFromCoords(lattitude, longitude) {
-        var geocoder = new google.maps.Geocoder;
-        let $this = this;
-        let options = {
-            useLocale: true,
-            maxResults: 2
-        };
-        this.nativeGeocoder.reverseGeocode(lattitude, longitude, options)
-            .then((result) => {
-            this.LocationNow = "";
-            let responseAddress = [];
-            for (let [key, value] of Object.entries(result[0])) {
-                if (value.length > 0)
-                    responseAddress.push(value);
-            }
-            responseAddress.reverse();
-            for (let value of responseAddress) {
-                this.LocationNow += value + ", ";
-            }
-            this.LocationNow = this.LocationNow.slice(0, -2);
-        })
-            .catch((error) => {
-            console.log("error =>", error);
-            var latlng = { lat: parseFloat(lattitude), lng: parseFloat(longitude) };
-            let responseAddress = [];
-            geocoder.geocode({ 'location': latlng }, function (result, status) {
-                if (status === 'OK') {
-                    $this.LocationNow = "";
-                    for (let [key, value] of Object.entries(result[0])) {
-                        responseAddress.push(value);
-                    }
-                    responseAddress.reverse();
-                    for (let value of responseAddress) {
-                        $this.LocationNow += value + ", ";
-                    }
-                    $this.LocationNow = responseAddress[4];
-                }
-                else {
-                    console.log('Geocoder failed due to: ' + status);
-                }
+        this.server.GeocodeFromCoords(lattitude, longitude, this.admin.ApiKey_google).subscribe((data) => {
+            let formatted_address = data.results[0].formatted_address;
+            this.LocationNow = formatted_address;
+            this.MyLocation.push({
+                "lat": data.results[0].geometry.location.lat,
+                "lng": data.results[0].geometry.location.lng,
+                "address": this.LocationNow
             });
         });
     }
@@ -247,22 +219,22 @@ let SetaddressPage = class SetaddressPage {
             }
         });
     }
-    saveAddress(item) {
+    saveAddress(item, type) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
             const loading = yield this.loadingController.create({
                 message: 'Guardando Dirección...',
             });
             yield loading.present();
-            if (item == 'LocationNow') {
+            if (type == 'LocationNow') {
                 var allData = {
-                    address: this.LocationNow,
+                    address: item.address,
                     lat: this.lat,
                     lng: this.lng,
                     user_id: localStorage.getItem('user_id')
                 };
                 this.server.saveAddress(allData).subscribe((response) => {
                     if (response.msg == 'done') {
-                        localStorage.setItem("address", this.LocationNow);
+                        localStorage.setItem("address", item.address);
                         localStorage.setItem('address_id', response.id);
                         localStorage.setItem("current_lat", this.lat);
                         localStorage.setItem('current_lng', this.lng);
@@ -336,7 +308,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \****************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title style=\"font-size: 17px;font-family: 'SF Pro Display';margin-left: -8px !important;\">Detalles de la entrega</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <div class=\"searchBar\" *ngIf=\"autocomplete\">\n    <ion-searchbar style=\"font-size: 12px;font-family: 'SF Pro Display';--margin-bottom:0;--margin-top:0;\" \n                  (ionInput)=\"search($event)\" \n                  placeholder=\"Ingrese una nueva dirección\" \n                  mode=\"ios\" \n                  color=\"light\" \n                  (ionClear)=\"clearSearch()\" \n                  [(ngModel)]=\"autocomplete.input\">\n    </ion-searchbar>\n  </div>\n\n  <!-- Search AutoComplete -->\n  <ion-list *ngIf=\"autocompleteItems && hasSearch\">\n    <ion-item *ngFor=\"let item of autocompleteItems\" tappable (click)=\"SelectSearchResult(item)\">\n      <ion-avatar slot=\"start\">\n        <ion-icon name=\"pin\" style=\"font-size: 22px;\"></ion-icon>\n      </ion-avatar>\n      <ion-label>\n        <h4>{{item.structured_formatting.main_text}}</h4>\n        <p style=\"font-size: 12px;font-family: 'SF Pro Display';\" *ngIf=\"item.structured_formatting.secondary_text\">\n          {{item.structured_formatting.secondary_text | slice:0:45}} \n          <i *ngIf=\"item.structured_formatting.secondary_text.length > 45\">...</i>\n        </p>\n      </ion-label>\n    </ion-item>\n  </ion-list>\n  <!-- Search AutoComplete -->\n  \n  <!-- LocationNow -->\n  <ion-item *ngIf=\"!LocationNow\">\n    <ion-avatar slot=\"start\">\n      <ion-icon name=\"navigate\" style=\"font-size: 22px;\"></ion-icon>\n    </ion-avatar>\n    <ion-label>\n      <h4>Tu Ubicación</h4>\n      <p>\n        <ion-skeleton-text animated style=\"width: 100%;height: 15px;\"></ion-skeleton-text>\n      </p>\n    </ion-label>\n  </ion-item>\n\n  <ion-item *ngIf=\"LocationNow && !hasSearch\" (click)=\"saveAddress('LocationNow')\">\n    <ion-avatar slot=\"start\">\n      <ion-icon name=\"navigate\" style=\"font-size: 22px;\"></ion-icon>\n    </ion-avatar>\n    <ion-label>\n      <h4>Tu Ubicación</h4>\n      \n      <p style=\"font-size: 12px;font-family: 'SF Pro Display';\">\n        {{LocationNow | slice:0:45}} <i *ngIf=\"LocationNow.length > 45\">...</i>\n      </p>\n    </ion-label>\n  </ion-item>\n  <!-- LocationNow -->\n\n  <!-- Save Address -->\n  <ion-list *ngIf=\"!hasSearch\">\n    <ion-item-sliding *ngFor=\"let add of address\">\n      <ion-item (click)=\"saveAddress(add)\">\n        <ion-avatar slot=\"start\">\n          <ion-icon name=\"time\" style=\"font-size: 22px;\"></ion-icon>\n        </ion-avatar>\n        <ion-label>\n          <h4 *ngIf=\"add.type\">{{add.type}}</h4>\n          <h4 *ngIf=\"!add.type\">Sin Especificar</h4>\n          \n          <p style=\"font-size: 12px;font-family: 'SF Pro Display';\">\n            {{add.address | slice:0:45}} <i *ngIf=\"add.address.length > 45\">...</i>\n          </p>\n        </ion-label>\n      </ion-item>\n  \n      <ion-item-options side=\"end\">\n        <ion-item-option color=\"danger\" (click)=\"removeAddress(add.id)\">\n          <ion-icon name=\"trash\"></ion-icon>\n          Eliminar\n        </ion-item-option>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n  <!-- Save Address -->\n\n</ion-content>\n<ion-footer>\n  <ion-button expand=\"full\" color=\"success\" mode=\"ios\">Guardar</ion-button>\n</ion-footer>\n";
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title style=\"font-size: 17px;font-family: 'SF Pro Display';margin-left: -8px !important;\">Detalles de la entrega</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <div class=\"searchBar\" *ngIf=\"autocomplete\">\n    <ion-searchbar style=\"font-size: 12px;font-family: 'SF Pro Display';--margin-bottom:0;--margin-top:0;\" \n                  (ionInput)=\"search($event)\" \n                  placeholder=\"Ingrese una nueva dirección\" \n                  mode=\"ios\" \n                  color=\"light\" \n                  (ionClear)=\"clearSearch()\" \n                  [(ngModel)]=\"autocomplete.input\">\n    </ion-searchbar>\n  </div>\n\n  <!-- Search AutoComplete -->\n  <ion-list *ngIf=\"autocompleteItems && hasSearch\">\n    <ion-item *ngFor=\"let item of autocompleteItems\" tappable (click)=\"SelectSearchResult(item)\">\n      <ion-avatar slot=\"start\">\n        <ion-icon name=\"pin\" style=\"font-size: 22px;\"></ion-icon>\n      </ion-avatar>\n      <ion-label>\n        <h4>{{item.structured_formatting.main_text}}</h4>\n        <p style=\"font-size: 12px;font-family: 'SF Pro Display';\" *ngIf=\"item.structured_formatting.secondary_text\">\n          {{item.structured_formatting.secondary_text | slice:0:45}} \n          <i *ngIf=\"item.structured_formatting.secondary_text.length > 45\">...</i>\n        </p>\n      </ion-label>\n    </ion-item>\n  </ion-list>\n  <!-- Search AutoComplete -->\n  \n  <!-- LocationNow -->\n  <ion-item *ngIf=\"!LocationNow\">\n    <ion-avatar slot=\"start\">\n      <ion-icon name=\"navigate\" style=\"font-size: 22px;\"></ion-icon>\n    </ion-avatar>\n    <ion-label>\n      <h4>Tu Ubicación</h4>\n      <p>\n        <ion-skeleton-text animated style=\"width: 100%;height: 15px;\"></ion-skeleton-text>\n      </p>\n    </ion-label>\n  </ion-item>\n\n  <ion-item *ngIf=\"LocationNow && !hasSearch\" (click)=\"saveAddress(MyLocation[0],'LocationNow')\">\n    <ion-avatar slot=\"start\">\n      <ion-icon name=\"navigate\" style=\"font-size: 22px;\"></ion-icon>\n    </ion-avatar>\n    <ion-label>\n      <h4>Tu Ubicación</h4>\n      \n      <p style=\"font-size: 12px;font-family: 'SF Pro Display';\">\n        {{LocationNow | slice:0:45}} <i *ngIf=\"LocationNow.length > 45\">...</i>\n      </p>\n    </ion-label>\n  </ion-item>\n  <!-- LocationNow -->\n\n  <!-- Save Address -->\n  <ion-list *ngIf=\"!hasSearch\">\n    <ion-item-sliding *ngFor=\"let add of address\">\n      <ion-item (click)=\"saveAddress(add)\">\n        <ion-avatar slot=\"start\">\n          <ion-icon name=\"time\" style=\"font-size: 22px;\"></ion-icon>\n        </ion-avatar>\n        <ion-label>\n          <h4 *ngIf=\"add.type\">{{add.type}}</h4>\n          <h4 *ngIf=\"!add.type\">Sin Especificar</h4>\n          \n          <p style=\"font-size: 12px;font-family: 'SF Pro Display';\">\n            {{add.address | slice:0:45}} <i *ngIf=\"add.address.length > 45\">...</i>\n          </p>\n        </ion-label>\n      </ion-item>\n  \n      <ion-item-options side=\"end\">\n        <ion-item-option color=\"danger\" (click)=\"removeAddress(add.id)\">\n          <ion-icon name=\"trash\"></ion-icon>\n          Eliminar\n        </ion-item-option>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n  <!-- Save Address -->\n\n</ion-content>\n<ion-footer>\n  <ion-button expand=\"full\" color=\"success\" mode=\"ios\">Guardar</ion-button>\n</ion-footer>\n";
 
 /***/ })
 

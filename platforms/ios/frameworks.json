@@ -16,5 +16,5 @@
     "SafariServices.framework": 1,
     "SystemConfiguration.framework": 2,
     "libPayPalMobile.a": 1,
-    "WebKit.framework": 2
+    "WebKit.framework": 1
 }

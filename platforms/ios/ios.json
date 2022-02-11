@@ -103,6 +103,10 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"FirebaseAuthentication\"><param name=\"ios-package\" value=\"FirebaseAuthenticationPlugin\" /><param name=\"onload\" value=\"false\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
               "count": 1
             },
@@ -124,7 +128,7 @@
             },
             {
               "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
-              "count": 2
+              "count": 1
             },
             {
               "xml": "<feature name=\"NativeGeocoder\"><param name=\"ios-package\" value=\"NativeGeocoder\" /></feature>",
@@ -148,10 +152,6 @@
             },
             {
               "xml": "<feature name=\"CordovaStripe\"><param name=\"ios-package\" value=\"CordovaStripe\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"CDVWKWebViewEngine\"><param name=\"ios-package\" value=\"CDVWKWebViewEngine\" /></feature>",
               "count": 1
             },
             {
@@ -203,6 +203,10 @@
       "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0",
       "PACKAGE_NAME": "com.lachona.burger"
     },
+    "cordova-plugin-firebase-authentication": {
+      "IOS_FIREBASE_POD_VERSION": "~> 8.8.0",
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
     "cordova-plugin-geolocation": {
       "GPS_REQUIRED": "true",
       "PACKAGE_NAME": "com.lachona.burger"
@@ -224,9 +228,6 @@
       "PACKAGE_NAME": "com.lachona.burger"
     },
     "cordova-plugin-stripe": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
-    "cordova-plugin-wkwebview-engine": {
       "PACKAGE_NAME": "com.lachona.burger"
     },
     "onesignal-cordova-plugin": {
@@ -265,6 +266,14 @@
       "pluginId": "cordova-plugin-facebook4",
       "clobbers": [
         "facebookConnectPlugin"
+      ]
+    },
+    {
+      "id": "cordova-plugin-firebase-authentication.FirebaseAuthentication",
+      "file": "plugins/cordova-plugin-firebase-authentication/www/FirebaseAuthentication.js",
+      "pluginId": "cordova-plugin-firebase-authentication",
+      "merges": [
+        "cordova.plugins.firebase.auth"
       ]
     },
     {
@@ -356,22 +365,6 @@
       ]
     },
     {
-      "id": "cordova-plugin-wkwebview-engine.ios-wkwebview-exec",
-      "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js",
-      "pluginId": "cordova-plugin-wkwebview-engine",
-      "clobbers": [
-        "cordova.exec"
-      ]
-    },
-    {
-      "id": "cordova-plugin-wkwebview-engine.ios-wkwebview",
-      "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview.js",
-      "pluginId": "cordova-plugin-wkwebview-engine",
-      "clobbers": [
-        "window.WkWebView"
-      ]
-    },
-    {
       "id": "onesignal-cordova-plugin.OneSignal",
       "file": "plugins/onesignal-cordova-plugin/www/OneSignal.js",
       "pluginId": "onesignal-cordova-plugin",
@@ -386,6 +379,7 @@
     "cordova-plugin-add-swift-support": "2.0.2",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "6.4.0",
+    "cordova-plugin-firebase-authentication": "5.1.0",
     "cordova-plugin-geolocation": "4.1.0",
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-ionic-webview": "5.0.0",
@@ -393,7 +387,6 @@
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-stripe": "1.5.3",
-    "cordova-plugin-wkwebview-engine": "1.2.2",
     "onesignal-cordova-plugin": "2.11.1"
   }
 }

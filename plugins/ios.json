@@ -20,6 +20,10 @@
       "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0",
       "PACKAGE_NAME": "com.lachona.burger"
     },
+    "cordova-plugin-firebase-authentication": {
+      "IOS_FIREBASE_POD_VERSION": "~> 8.8.0",
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
     "cordova-plugin-geolocation": {
       "GPS_REQUIRED": "true",
       "PACKAGE_NAME": "com.lachona.burger"
@@ -41,9 +45,6 @@
       "PACKAGE_NAME": "com.lachona.burger"
     },
     "cordova-plugin-stripe": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
-    "cordova-plugin-wkwebview-engine": {
       "PACKAGE_NAME": "com.lachona.burger"
     },
     "onesignal-cordova-plugin": {

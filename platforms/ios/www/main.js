@@ -1081,6 +1081,10 @@ let ServerService = class ServerService {
             console.log(error);
         });
     }
+    GeocodeFromCoords(lat, lng, apikey) {
+        return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=" + apikey)
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)(results => results));
+    }
     welcome() {
         return this.http.get(this.url + 'welcome')
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)(results => results));
