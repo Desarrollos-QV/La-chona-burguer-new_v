@@ -1,0 +1,22 @@
+<ion-content >
+<!-- Slide Ini -->
+    <ion-slides class="welcome" *ngIf="chargePage == 'sliderIni'">
+        <ion-slide *ngFor="let welcome of data;let i = index">
+            <img src="{{ welcome.img }}"/>
+            <div [innerHTML]="welcome.title"></div>
+            <span slot="end" class="slideNext"><i>Desliza</i> <b>> ></b></span>
+        </ion-slide>
+    </ion-slides>
+<!-- Slide Ini -->
+
+</ion-content>
+
+<ion-footer *ngIf="chargePage == 'sliderIni'">
+    <div class="logcast" style="padding: 25px;text-align: center;">
+        <ion-label color="medium"  routerLink="/login">Iniciar Sesión</ion-label>
+    
+        <ion-label color="medium" routerLink="/signup">Registrarse</ion-label>
+    </div>   
+</ion-footer>
+    
+    

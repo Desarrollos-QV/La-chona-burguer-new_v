@@ -1,0 +1,316 @@
+.pics_pp {
+	height: 155px;
+	position: relative;
+
+	.portada {
+		z-index: -1 !important;
+		width: 100%;
+		height: 150px;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.prof_img {
+		position: absolute;
+		top: 100px;
+		left: 0;right: 0;
+		margin: auto;
+		width: 80px;
+		height: 80px;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		border-radius: 6px;
+		border: 1px solid #fff;
+		z-index: 1000;
+	}
+
+}
+
+.welcome-card {
+	margin-bottom: 15%;
+	background-color: #fff;
+	box-shadow: none;
+	width: 96%;
+	margin-left: 2%;
+
+	ion-card-header {
+		margin-top: 0 !important;
+
+		ion-card-title {
+			text-align: center;
+			
+			.info_res {
+				span {
+					font-size: 12px;
+					margin: 0 15px;
+					position: relative;	
+
+					&:nth-child(2)
+					{
+						position: relative;
+					
+						&::after {
+							position: absolute;
+							content: '';
+							left: -15px;top: 27%;
+							width: 3px;
+							height: 3px;
+							background: #000;
+							border-radius: 100%;
+						}
+
+						&::before {
+							position: absolute;
+							content: '';
+							right: -15px;top: 27%;
+							width: 3px;
+							height: 3px;
+							background: #000;
+							border-radius: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/* Transparent standard */
+.slide-tool {
+	ion-toolbar {
+		// --background: red;
+		--ion-color-base: transparent !important;
+		--color:#fff;
+		--background: rgb(41, 41, 41);
+		--background: linear-gradient(180deg, rgb(42, 42, 42) 0%, rgba(255,255,255,0) 100%);
+		.title_header {
+			display: none;
+			position: relative;
+		}
+	
+		ion-back-button {
+			background: #F49A00;
+			color: #fff;
+			border-radius: 25px;
+			font-size: 14px;
+		}
+	
+		ion-buttons {
+	
+			ion-icon {
+				font-size: 22px;
+				background: #F49A00;
+				color: #fff;
+				border-radius: 25px;
+			}
+		}
+	}
+}
+
+.slide-tool.scroll {
+	ion-toolbar {
+		--ion-color-base: #fff !important;
+		--color:#000;
+		--background: rgb(255, 255, 255);
+		--background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(240, 240, 240, 0.226) 100%);
+
+		.title_header {
+			display: block;
+			position: relative;
+			color: #000;
+		}
+	
+		ion-back-button {
+			background: transparent !important;
+			color: #000;
+		}
+	
+		ion-buttons {
+	
+			ion-icon {
+				background: transparent !important;
+				color: #000;
+			}
+		}
+	}
+}
+
+@mixin keyframes($animationName) {
+	@-webkit-keyframes #{$animationName} {
+	  @content;
+	}
+	@-moz-keyframes #{$animationName} {
+	  @content;
+	}
+	@-o-keyframes #{$animationName} {
+	  @content;
+	}
+	@keyframes #{$animationName} {
+	  @content;
+	}
+}
+
+@mixin animate($name, $duration, $iteration, $direction) {
+	-webkit-animation-duration: $duration;
+	-moz-animation-duration: $duration;
+	-o-animation-duration: $duration;
+	animation-duration: $duration;
+	-webkit-animation-iteration-count: $iteration;
+	-moz-animation-iteration-count: $iteration;
+	-o-animation-iteration-count: $iteration;
+	animation-iteration-count: $iteration;
+	-webkit-animation-name: $name;
+	-moz-animation-name: $name;
+	-o-animation-name: $name;
+	animation-name: $name;
+	-webkit-animation-direction: $direction;
+	-moz-animation-direction: $direction;
+	-o-animation-direction: $direction;
+	animation-direction: $direction;
+}
+
+@include keyframes(pulsate) {
+	from {
+		right: -50%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		right: 0;
+	}
+}
+
+@include keyframes(downer) {
+	from {
+		right: -30%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		right: 0;
+	}
+}
+
+
+@mixin pulsate {
+	@include animate(pulsate, 0.8s, 1, normal);
+}
+
+@mixin downer {
+	@include animate(downer, 0.6s, 1, normal);
+	
+}
+/* Show background if class is active */
+.show-background {
+    border-style: none;
+	background: #fff;
+	color: #000;
+	padding-top: 18px;
+	@include downer;
+
+	.title_header {
+		display: block;
+		@include pulsate;
+	}
+}
+
+
+/* Remove bottom border on md */
+.header-md::after {
+    background-image: none;
+}
+
+/* Remove bottom border on ios */
+.header-ios ion-toolbar:last-child {
+    --border-width: 0;
+}
+
+
+
+ion-content {
+	position: absolute;
+	top:0;
+}
+
+h1
+{
+	font-size:19px;
+}
+
+ion-badge
+{
+	--padding-bottom:5px;
+	--padding-start:10px;
+	--padding-end:10px;
+	--padding-top:5px;
+}
+
+.quantityinput{padding:2px 2px; text-align:center; border:1px solid #ccc;  background:#fff; width:28px;}
+.quantitybtn .sign{padding:7px 2px; width:20px; text-align:center; cursor:pointer; font-weight:bold; outline:none; }
+.quantitybtn .plus{background:#f44336; border:1px solid #f44336; color:#fff; border-radius:5px 0px 0px 5px;}
+.quantitybtn .minus{background:#4caf50; border:1px solid #4caf50; color:#fff; border-radius:0px 5px 5px 0px;}
+
+.header_stikcy {
+	position: absolute;
+	top: 0;left: 0;
+	width: 100%;
+	height: 250px;
+	padding: 12px 15px;
+	z-index: 50;
+	overflow: hidden;
+	
+	&:after {
+		position: absolute;
+		top: 0;left: 0;
+		content: '';
+		width: 100%;
+		height: 100%;
+		background-color: rgba($color: #000000, $alpha: 0.4);
+		z-index: -1;
+	}
+
+	ion-icon {
+		color: #fff;
+		font-size: 28px;
+	}
+}
+
+.slide-menu {
+	display: block;
+	position: relative;
+	width: 100%;
+	padding: 10px 6px;
+	background-color: #000;
+	visibility: hidden;
+}
+
+.slide_down_View {
+	visibility: visible;
+	@include downer;
+}
+
+.slide-menu ion-label {
+	font-family: 'SF Pro Display';
+    font-weight: 100;
+	font-style: normal;
+	font-size: 14px;
+	color: #fff;
+    letter-spacing: 0.8px;
+}
+
+.pic_menu {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position:center;
+	overflow: hidden;
+}
+
+.badgeCart {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 10px;
+}

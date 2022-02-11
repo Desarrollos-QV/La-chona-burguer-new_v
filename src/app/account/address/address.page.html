@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+       <ion-button (click)="loadMap()" shape="round" fill="outline" style="font-size: 12px">
+        <ion-icon slot="start" name="locate"></ion-icon>
+        Mi ubicación
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title> </ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <div class="map-wrapper">
+    <div id="map_center">
+      <img src="assets/map-marker.png" width="30px" />
+    </div>
+    <div #map id="map"></div>
+  </div>
+</ion-content>
+<ion-footer>
+ 
+  <form #form="ngForm" (ngSubmit)="saveAddress(form.value)">
+    
+    <div class="footer_content">
+      <div class="form">
+        <ion-list lines="none">
+            <ion-item lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">Dirección</ion-label>
+                        <ion-textarea [(ngModel)]="address" name="address" disabled></ion-textarea>
+                    </div>
+                </div>
+            </ion-item>
+
+            <div class="address_title">
+                <h3>Guardar Dirección</h3>
+                <ion-radio-group [(ngModel)]="type_add" name="type_add">
+                    <ion-row>
+                        <ion-col size="4">
+                            <ion-item lines="none">
+                                <ion-radio slot="start" value="Hogar"></ion-radio>
+                                <ion-label class="d-flex">
+                                    <div class="img_container">
+                                        <div class="img_box">
+                                            <img src="assets/ic_homeblk.png">
+                                            <img src="assets/ic_homewt.png">
+                                        </div>
+                                        <h2>Hogar</h2>
+                                    </div>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-item lines="none">
+                                <ion-radio slot="start" value="Oficina"></ion-radio>
+                                <ion-label class="d-flex">
+                                    <div class="img_container">
+                                        <div class="img_box">
+                                            <img src="assets/ic_officeblk.png">
+                                            <img src="assets/ic_officewt.png">
+                                        </div>
+                                        <h2>Oficina</h2>
+                                    </div>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-item lines="none">
+                                <ion-radio slot="start" value="Otro"></ion-radio>
+                                <ion-label class="d-flex">
+                                    <div class="img_container">
+                                        <div class="img_box">
+                                            <img src="assets/ic_otherblk.png">
+                                            <img src="assets/ic_otherwt.png">
+                                        </div>
+                                        <h2>Otro</h2>
+                                    </div>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-radio-group>
+            </div>
+        </ion-list>
+      </div>
+
+    </div>
+    <ion-button expand="full" class="btn" mode="md" type="submit">Guardar dirección</ion-button>
+  </form>
+
+</ion-footer>

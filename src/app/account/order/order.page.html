@@ -1,0 +1,106 @@
+<ion-header no-border>
+  <ion-toolbar color="white">
+    <ion-buttons slot="start">
+<ion-back-button></ion-back-button>
+</ion-buttons>
+    <ion-title>
+      {{ text.history_title }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="data">
+
+<ion-card class="welcome-card" *ngFor="let order of data" mode="ios">
+
+<ion-card-header>
+
+<ion-card-subtitle>{{ order.store.name }} (#{{order.id }}) <ion-badge color="primary" style="float:right">{{ order.total | currency}}</ion-badge></ion-card-subtitle>
+
+<br>
+<ion-row>
+
+<ion-col size="5"><b> {{ text.history_date }}</b></ion-col>
+<ion-col size="7">{{ order.date }}</ion-col>
+
+</ion-row>
+
+<ion-row>
+
+<ion-col size="5"><b> {{ text.history_status }}</b></ion-col>
+<ion-col size="7">{{ order.status }}</ion-col>
+
+</ion-row>
+
+<ion-row>
+
+<ion-col size="6"><b> {{ text.history_item }}</b></ion-col>
+<ion-col size="3"><b> {{ text.history_qty }}</b></ion-col>
+<ion-col size="3"><b> {{ text.history_price }}</b></ion-col>
+
+</ion-row>
+
+<span *ngFor="let item of order.items">
+<ion-row>
+
+<ion-col size="6">{{ item.item }} (<small>{{ item.type }}</small>)</ion-col>
+<ion-col size="3">{{ item.qty }}</ion-col>
+<ion-col size="3">{{ order.currency }}{{ item.price * item.qty }}</ion-col>
+</ion-row>
+
+<ion-row *ngFor="let addon of item.addon">
+
+<ion-col size="6">{{ addon.addon }}</ion-col>
+<ion-col size="3">{{ addon.qty }}</ion-col>
+<ion-col size="3">{{ order.currency }}{{ addon.price  }}</ion-col>
+
+</ion-row>
+</span>
+
+<br>
+<ion-button style="font-size: 13px;text-align:center;" *ngIf="order.hasRating == 0 || order.ratStore == 0" fill="outline" size="small" color="primary" routerLink="/rate/{{ order.id }}/store" routerDirection="forward">
+  {{ text.history_rating }}
+</ion-button>
+<ion-button style="font-size: 13px;text-align:center;" *ngIf="order.st == 0 && order.pay == 1" fill="outline" size="small" style="float: right" (click)="cancelOrder(order.id)">
+  {{ text.history_cancel }}
+</ion-button>
+
+</ion-card-header>
+
+</ion-card>
+
+
+</ion-content>
+
+<ion-footer *ngIf="text">
+  <ion-toolbar mode="ios">
+  
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      
+     <ion-tab-button routerLink="/home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>{{ text.home_footer_name }}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/home">
+        <ion-icon name="pin"></ion-icon>
+        <ion-label>{{ text.home_nearest }}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/cart" routerDirection="forward">
+        <ion-icon name="basket"></ion-icon>
+        <ion-label>{{ text.home_cart }}</ion-label>
+        <ion-badge *ngIf="count > 0">{{ count }}</ion-badge>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/profile" routerDirection="forward">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>{{ text.home_profile }}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+  
+  </ion-toolbar>
+</ion-footer>

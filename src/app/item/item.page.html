@@ -1,0 +1,133 @@
+<ion-header no-border style="z-index: 1000;">
+  <div class="slide-tool" *ngIf="data">
+    <ion-toolbar color="primary"> 
+      <!-- [class.show-background]="showToolbar" translucent -->
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+        <span class="title_header">{{ data.title }}</span>
+      </ion-buttons>
+      <ion-buttons slot="end" (click)="viewInfoStore()"> 
+        <ion-icon name="home" slot="end" style="float: right;margin-right: 15px;"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+
+  <div class="slide-menu" *ngIf="data">
+    <ion-slides  [options]="BannerOption">
+      <ion-slide *ngFor="let category of data.items" style="text-align: left;">
+        <ion-label style="font-size: 14px;" (click)="ScrollTo(category.id)">{{category.cate_name}}</ion-label>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-header>
+
+<ion-content mode="ios"  [scrollEvents]="true" (ionScroll)="onScroll($event)" *ngIf="data">
+
+  <ion-fab style="padding-bottom: 45px;" horizontal="end" vertical="bottom" slot="fixed" *ngIf="count > 0" routerLink="/cart" routerDirection="forward">
+    <ion-fab-button color="danger" edge="true">
+      <ion-icon name="cart"></ion-icon> {{ count }}
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-fab style="padding-bottom: 45px;" horizontal="end" vertical="bottom" slot="fixed" *ngIf="order > 0" routerLink="/done" routerDirection="forward">
+    <ion-fab-button color="danger" edge="true">
+      <ion-icon name="pin"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="pics_pp">
+    <div class="portada" [style.backgroundImage]="'url('+ data.portada +')'"></div>
+    <div class="prof_img" [style.backgroundImage]="'url('+ data.img +')'">
+      <!-- <img src="{{data.img}}" alt="perfil"> -->
+    </div>
+  </div>
+
+  <ion-card mode="ios" class="welcome-card">
+    
+    <ion-card-header>
+
+      <ion-card-title>
+        <h4>
+          <ion-icon name="restaurant"></ion-icon> {{ data.title }}
+        </h4>
+
+        <div class="info_res">
+          <span>
+            <ion-icon name="star"></ion-icon>
+            {{ data.rating }}
+          </span>
+
+          <span>
+            <ion-icon name="bicycle"></ion-icon>
+            {{data.delivery_time}} - min
+          </span>
+
+          <span>
+            <ion-icon name="stats"></ion-icon>
+            {{data.person_cost}}
+          </span>
+        </div>
+        
+       
+      </ion-card-title>
+      
+    </ion-card-header>
+
+    <ion-card-content>
+      <span *ngFor="let category of data.items" class="cate_{{ category.id }}">
+        <h1 style="margin-top: 20px">{{ category.cate_name }}</h1>
+        <span *ngFor="let item of category.items">
+          <ion-row style="margin-top:10px;padding: 0px" *ngIf="item.status == 0">
+            <ion-col size="5" (click)="showOption(item,data.currency)">
+              <div class="pic_menu" [style.backgroundImage]="'url('+ item.img +')'"></div>
+            </ion-col>
+            <ion-col size="7" style="position: relative;">
+              <b (click)="showOption(item,data.currency)">{{ item.name }}</b><br>
+                <small (click)="showOption(item,data.currency)" style="color: gray;font-size: 10px" *ngIf="item.description">
+                    {{ item.description | slice:0:25 }}...
+                </small><br>
+              <span (click)="showOption(item,data.currency)" style="color: rgb(29, 29, 29);font-size: 11px"><b>MXN {{ data.currency }}{{ item.price }}</b></span>
+                
+              <ion-badge *ngIf="hasCart(item.id)" class="badgeCart">{{hasCart(item.id)}}</ion-badge>
+            
+            </ion-col>
+          
+          </ion-row>
+        </span>
+      </span>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer *ngIf="text && data" style="z-index: 1000;">
+    <ion-toolbar mode="ios">
+    
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        
+       <ion-tab-button routerLink="/home">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>{{ text.home_footer_name }}</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/home">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>{{ text.home_nearest }}</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/cart" routerDirection="forward">
+          <ion-icon name="basket"></ion-icon>
+          <ion-label>{{ text.home_cart }}</ion-label>
+          <ion-badge *ngIf="count > 0">{{ count }}</ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/profile" routerDirection="forward">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{ text.home_profile }}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+    
+    </ion-toolbar>
+</ion-footer>

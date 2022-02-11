@@ -1,0 +1,350 @@
+<ion-header  #head>
+  <ion-toolbar class="header" color="white">
+    <ion-buttons slot="start" >
+      <ion-menu-button></ion-menu-button>
+
+      <span color="dark" *ngIf="address" style="font-size:13.5px;" routerLink="/setaddress" routerDirection="forward">
+        <ion-icon name="pin"></ion-icon>
+        {{address | slice:0:28}} <i *ngIf="address && address.length > 28">...</i>
+        <ion-icon name="arrow-dropdown"></ion-icon>
+      </span>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="searchBar" *ngIf="text">
+    <ion-searchbar style="font-size: 12px;font-family: 'SF Pro Display';--margin-bottom:0;--margin-top:0;" (ionInput)="search($event)" placeholder="{{ text.home_search }}" mode="ios" color="light" (ionClear)="clearSearch()" [(ngModel)]="searchQuery"></ion-searchbar>
+    
+    <ion-grid class="grid_menu">
+      <ion-row>
+        <ion-col size="4" (click)="OptionCat_one()">
+          Cercanos
+          <ion-icon name="arrow-dropdown"></ion-icon>
+        </ion-col>
+        <ion-col size="4" routerLink="/categorys" routerDirection="forward">
+          Categorias
+          <ion-icon name="arrow-dropdown"></ion-icon>
+        </ion-col>
+        <ion-col size="4" (click)="OptionCat_two()">
+          Filtros
+          <ion-icon name="arrow-dropdown"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+   
+  </div>
+</ion-header>
+<ion-content *ngIf="text" mode="md" scrollEvents="true" hide-header [header]="head">
+
+  <!-- Refresh -->
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)"  pullFactor="0.5" pullMin="100" pullMax="200">
+      <ion-refresher-content 
+      pullingIcon="ellipsis-horizontal"
+      refreshingSpinner="dots">
+        
+      </ion-refresher-content>
+    </ion-refresher>
+  <!-- Refresh -->
+
+  <!-- Orders -->
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="count > 0" routerLink="/cart" routerDirection="forward">
+      <ion-fab-button color="danger" edge="true">
+        <ion-icon name="cart"></ion-icon> {{ count }}
+      </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="order > 0" routerLink="/done" routerDirection="forward">
+      <ion-fab-button color="danger" edge="true">
+        <ion-icon name="pin"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  <!-- Orders -->
+
+  <!-- Content  rgb(243, 243, 243)-->
+  <div class="welcome-card" style="background-color:#FFFFFF;width: 98%;margin-left: 1%" mode="ios">
+    <ion-list id="skeleton" *ngIf="!data">
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+      </ion-list-header>
+
+      <ion-item *ngFor="let fake of fakeData">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-card-content *ngIf="data" style="padding:0;">
+
+      <!-- Banners -->
+      <ion-slides pager="false" [options]="BannerOption" #slideone autoplay="3000" *ngIf="!hasSearch && !nearby">
+        <ion-slide *ngFor="let offer of data.banner" (click)="bannerLink(offer)">
+          <!-- <img src="{{ offer.img }}" class="img_banner"> -->
+          <div class="img_banner" [style.backgroundImage]="'url('+ offer.img +')'"></div>
+        </ion-slide>
+      </ion-slides>
+      <!-- Banners -->
+
+      <ion-card *ngIf="!hasSearch && !nearby && data && data.store.length == 0" mode="ios" style="padding: 20px 20px;">
+
+        <h2>
+          Opps! Aun no hay comercios en esta zona
+        </h2>
+        <ion-button size="small" mode="ios" routerLink="/city" routerDirection="back">Cambiar Localidad</ion-button>
+      </ion-card>
+    
+      <ion-backdrop tappable="false" *ngIf="filterPress"></ion-backdrop>
+
+      <!--******************* Ordena de nuevo ***************************-->
+      <div *ngIf="!nearby && !hasSearch && LastVisitStore.length >= 1 && data && data.store.length > 0" style="margin-top: 30px;background-color: #FFFFFF;">
+        <h6 style="padding-left:5px;font-family: 'SF Pro Display';font-weight: 700;font-size: 16px;">
+          <ion-icon name="refresh"></ion-icon> Pidelo de Nuevo<br />
+          <small style="color: #727272;">Ordena <b>nuevamente</b> de tus restaurantes</small>
+          <a (click)="trashLasComm()" style="float: right;padding-right: 15px;padding-top: 4px;text-decoration: none;font-size: 12px;">Borrar Historial</a>
+        </h6>
+
+        <div style="margin-bottom: 10px;background-color: #fff;">
+          <ion-slides pager="false" [options]="TrendOption" #slideone autoplay="3000" class="trend">
+            <ion-slide *ngFor="let store of LastVisitStore" (click)="itemPage(store)">
+              <ion-card style="padding: 2px 2px;font-size: 12px;width: 100%;margin-left: 2px" mode="ios">
+                <ion-row>
+                  <ion-col size="12" style="margin: 0 !important;padding: 0 !important;">
+                    <div class="img_trend" [style.backgroundImage]="'url('+  store.img+')'">
+                      <div class="close_in"  *ngIf="!store.open">
+                        <span>NO DISPONIBLE EN ESTE MOMENTO</span>
+                      </div>
+                    </div>
+                  </ion-col>
+                  
+                  <ion-col size="12" style="text-align: left;">
+                    <div style="width: 100%;text-align: left;padding: 0 !important;margin: 0 !important;">
+                      <b style="font-size: 16px;">{{ store.title | slice:0:27 }}<i *ngIf="store.title.length > 27">...</i></b>
+                    </div>
+                    <small style="color: gray;font-size: 10px">
+                      <span style="color: #ff6b01;"><ion-icon name="star"></ion-icon> {{ store.rating }}</span> | {{ store.type }}
+                    </small><br>
+                    <small style="color: gray;font-size: 10px">
+                      Entrega en {{ store.delivery_time }}
+                    </small><br />
+
+                    <small *ngIf="store.max_distance > 0" style="color: hsl(144, 88%, 38%);">
+                      Distancia: {{store.km}} km
+                    </small><br *ngIf="store.max_distance > 0" />
+  
+                    <small *ngIf="store.max_distance == 0" style="color: red;">
+                      Sin cobertura en tu ubicación.
+                    </small><br *ngIf="store.max_distance == 0" />
+  
+                    <small *ngIf="store.delivery_charges_value.costs_ship == 0 && store.max_distance == 1">
+                      Envio <span style="color: #0cb850;">Gratis</span> <span *ngIf="!store.open"> | Abre a las: <span style="color:red;">{{store.open_time}}</span></span>
+                    </small>
+                  </ion-col>
+                </ion-row>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+      <!--******************* Ordena de nuevo ***************************-->
+
+      <!--******************* Trending Store ****************************-->
+      <div size="12" *ngIf="!hasSearch && !nearby && InTrendingStore.length > 0" style="margin-top: 30px;background-color: #FFFFFF;">
+        
+        <h6 style="padding-left: 5px; font-family: 'SF Pro Display';font-weight: 700;font-size: 16px;">
+          <ion-icon name="trending-up"></ion-icon> Tendencias<br />
+          <small style="color: #727272;">Estos son los restaurantes <b>tendencia</b> en {{city_name}}</small>
+        </h6>
+        
+        <ion-slides pager="false" [options]="TrendOption" #slideone autoplay="3000" class="trend">
+          <ion-slide *ngFor="let trend of InTrendingStore" (click)="itemPage(trend)">
+            <ion-card style="font-size: 12px;width: 100%;margin-left: 2px" mode="ios">
+              <ion-row>
+                <ion-col size="12" style="margin: 0 !important;padding: 0 !important;">
+                  <div class="img_trend" [style.backgroundImage]="'url('+ trend.portada +')'">
+                    <div class="close_in"  *ngIf="!trend.open">
+                      <span>NO DISPONIBLE EN ESTE MOMENTO</span>
+                    </div>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" style="text-align: left;">
+                  <div style="width: 100%;text-align: left;padding: 0 !important;margin: 0 !important;">
+                    <b style="font-size: 16px;">{{ trend.title | slice:0:27 }}<i *ngIf="trend.title.length > 27">...</i></b>
+                  </div>
+                  <small style="color: gray;font-size: 10px">
+                    <span style="color: #ff6b01;"><ion-icon name="star"></ion-icon> {{ trend.rating }}</span> | {{ trend.type }}
+                  </small><br>
+                  <small style="color: gray;font-size: 10px">
+                    Entrega en {{ trend.delivery_time }}
+                  </small><br />
+
+                  <small *ngIf="trend.max_distance > 0" style="color: hsl(144, 88%, 38%);">
+                    Distancia: {{trend.km}} km
+                  </small><br *ngIf="trend.max_distance > 0" />
+
+                  <small *ngIf="trend.max_distance == 0" style="color: red;">
+                    Sin cobertura en tu ubicación.
+                  </small><br *ngIf="trend.max_distance == 0" />
+
+                  <small *ngIf="trend.delivery_charges_value.costs_ship == 0 && trend.max_distance == 1">
+                    Envio <span style="color: #0cb850;">Gratis</span> <span *ngIf="!trend.open"> | Abre a las: <span style="color:red;">{{trend.open_time}}</span></span>
+                  </small>
+                </ion-col>
+              </ion-row>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </div>
+      <!--******************* Trending Store ****************************-->
+
+      <!--********************** Items Normales ********************************************************-->
+      <div *ngIf="!nearby && data && data.store.length > 0" style="background-color: #FFFFFF;margin-top: 15px;">
+          <ion-card style="padding: 2px 2px;font-size: 12px;width: 100%;margin-left: 2px" mode="ios" 
+            *ngFor="let store of ComerceRest;let i = index" (click)="itemPage(store)">
+
+            <ion-row>
+              <ion-col size="12" style="margin: 0 !important;padding: 0 !important;">
+                <div class="img_trend" [style.backgroundImage]="'url('+ store.portada +')'">
+                  <div class="close_in"  *ngIf="!store.open">
+                    <span>NO DISPONIBLE EN ESTE MOMENTO</span>
+                  </div>
+                </div>
+              </ion-col>
+              
+              <ion-col size="12" style="text-align: left;">
+                <div style="width: 100%;text-align: left;padding: 0 !important;margin: 0 !important;">
+                  <b style="font-size: 16px;">{{ store.title | slice:0:27 }}<i *ngIf="store.title.length > 27">...</i></b>
+                </div>
+                <small style="color: gray;font-size: 10px">
+                  <span style="color: #ff6b01;"><ion-icon name="star"></ion-icon> {{ store.rating }}</span> | {{ store.type }}
+                </small><br>
+                <small style="color: gray;font-size: 10px">
+                  Entrega en {{ store.delivery_time }}
+                </small><br />
+
+                <small *ngIf="store.max_distance > 0" style="color: hsl(144, 88%, 38%);">
+                  Distancia: {{store.km}} km
+                </small><br *ngIf="store.max_distance > 0" />
+
+                <small *ngIf="store.max_distance == 0" style="color: red;">
+                  Sin cobertura en tu ubicación.
+                </small><br *ngIf="store.max_distance == 0" />
+
+                <small *ngIf="store.delivery_charges_value.costs_ship == 0 && store.max_distance == 1">
+                  Envio <span style="color: #0cb850;">Gratis</span> <span *ngIf="!store.open"> | Abre a las: <span style="color:red;">{{store.open_time}}</span></span>
+                </small>
+              </ion-col>
+            </ion-row>
+
+            <ion-col size="12" *ngIf="i == bannerBottomRand && data.bottom.length > 0">
+              <ion-slides pager="false" [options]="MiddleBannerOption" #slideone autoplay="1000">
+                <ion-slide *ngFor="let bottom of data.bottom" (click)="bannerLink(bottom)"><img src="{{ bottom.img }}"></ion-slide>
+              </ion-slides>
+            </ion-col>
+
+          </ion-card>    
+      </div>
+      <!--********************** Items Normales ********************************************************-->
+
+      <!--********************** Comercios Cercanos ********************************************************-->
+      <div *ngIf="!hasSearch && nearby && data" style="background-color: #FFFFFF;margin-top: 0%;">
+        <h6 style="padding-left: 15px;padding-top: 25px; font-family: 'SF Pro Display';font-weight: 500;">
+          <ion-icon name="restaurant"></ion-icon> Comercios Cercanos
+        </h6>
+
+        <ion-row style="margin: 8px 15px;border: 0.5px solid #f0f0f0;" *ngFor="let store of data.store;let i = index" (click)="itemPage(store)">
+          <!-- Imagen -->
+          <ion-col size="4" style="margin: 0 !important;padding: 0 !important;">
+            <div class="img_radius" [style.backgroundImage]="'url('+ store.img +')'">
+              <div class="close_in"  *ngIf="!store.open">
+                <span>NO DISPONIBLE EN ESTE MOMENTO</span>
+              </div>
+            </div>
+          </ion-col>
+          <!-- Imagen -->
+          <!-- Info -->
+          <ion-col size="8" class="wrap_info" style="font-size: 12px;border-left: 0.5px solid #f0f0f0;padding-left: 8px;">
+            <div style="width: 100%;text-align: left;padding: 0 !important;margin: 0 !important;">
+              <b style="font-size: 16px;">{{ store.title | slice:0:27 }}<i *ngIf="store.title.length > 27">...</i></b>
+            </div>
+            <small style="color: gray;font-size: 10px">
+              <span style="color: #ff6b01;"><ion-icon name="star"></ion-icon> {{ store.rating }}</span> | {{ store.type }}
+            </small><br>
+            <small style="color: gray;font-size: 10px">
+              Entrega en {{ store.delivery_time }}
+            </small><br />
+
+            <small *ngIf="store.max_distance > 0" style="color: hsl(144, 88%, 38%);">
+              Distancia: {{store.km}} km
+            </small><br *ngIf="store.max_distance > 0" />
+
+            <small *ngIf="store.max_distance == 0" style="color: red;">
+              Sin cobertura en tu ubicación.
+            </small><br *ngIf="store.max_distance == 0" />
+
+            <small *ngIf="store.delivery_charges_value.costs_ship == 0 && store.max_distance == 1">
+              Envio <span style="color: #0cb850;">Gratis</span> <span *ngIf="!store.open"> | Abre a las: <span style="color:red;">{{store.open_time}}</span></span>
+            </small>
+          </ion-col>
+          <!-- Info -->
+        </ion-row>
+      </div>
+      <!--********************** Comercios Cercanos ********************************************************-->
+      
+      <!--********************** Infinite Scroll ******************************************-->
+        <ion-infinite-scroll *ngIf="!hasSearch" threshold="100px" (ionInfinite)="loadMoreData($event)">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Cargando mas datos...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+        <ion-item *ngIf="let_end" style="text-align: center;">
+          Ya no hay mas tiendas que mostrar.
+        </ion-item>
+      <!--********************** Infinite Scroll ******************************************-->
+    </ion-card-content>
+  </div>
+  <!-- Content -->
+
+</ion-content>
+
+<ion-footer *ngIf="text && isKeyboardHide">
+  <ion-toolbar mode="md">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        
+      <ion-tab-button (click)="loadData(city_id + '?ss=ss')">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>{{ text.home_footer_name }}</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="nearBy()">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>{{ text.home_nearest }}</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button routerLink="/cart" routerDirection="forward">
+          <ion-icon name="basket"></ion-icon>
+          <ion-label>{{ text.home_cart }}</ion-label>
+          <ion-badge *ngIf="count > 0">{{ count }}</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button routerLink="/profile" routerDirection="forward">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{ text.home_profile }}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

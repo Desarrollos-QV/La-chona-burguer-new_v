@@ -1,0 +1,89 @@
+ion-toolbar {
+	--position:relative;
+    --background: transparent;
+	--ion-color-base: transparent !important;
+	--color:#fff;
+}
+
+/* Show background if class is active */
+.show-background {
+    border-style: none;
+	background: #fff;
+	color: #000;
+	padding-top: 8px;
+
+	.title_header {
+		display: block;
+	}
+}
+
+/* Remove bottom border on md */
+.header-md::after {
+    background-image: none;
+}
+
+/* Remove bottom border on ios */
+.header-ios ion-toolbar:last-child {
+    --border-width: 0;
+}
+
+
+ion-content {
+	position: absolute;
+	top:0;
+	padding-bottom: 50px;
+}
+
+.footer-line {
+	width: 100%;
+	height: 100px;
+}
+
+.addToCartBtn {
+	width: 100%;
+}
+
+
+
+.quantityinput{
+	padding:13px 10px; 
+	text-align:center; 
+	border:1px solid #ccc;  
+	background:#fff; 
+	width:48px;
+}
+
+.quantitybtn .sign{
+	padding:15px 10px; width:40px; 
+	text-align:center; 
+	cursor:pointer; 
+	font-weight:bold; 
+	outline:none; 
+}
+
+.quantitybtn .plus{
+	background:#0a0a0a; 
+	border:1px solid #0a0a0a; 
+	color:#fff; 
+	border-radius:10px 0px 0px 10px;
+}
+
+.quantitybtn .minus{
+	
+	background:#f44336; 
+	border:1px solid #f44336; 
+	color:#fff; 
+	border-radius:0px 10px 10px 0px;
+}
+
+
+.arrow-back {
+	float:left;
+	left: 0;
+	font-size: 22px;
+	padding: 2px 4px;
+	border-radius: 10px;
+	background-color: #f44336;
+	color: #ffffff;
+}
+

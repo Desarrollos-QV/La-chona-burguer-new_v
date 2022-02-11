@@ -1,0 +1,161 @@
+<ion-header no-border>
+  <ion-toolbar color="white">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="SearchTitle" style="font-size: 14px;">
+      {{SearchTitle}}
+    </ion-title>
+    <ion-label slot="end" style="padding-right: 15px;" (click)="viewAll()" *ngIf="SearchTitle != 'Categorias'">Ver Todo</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-card *ngIf="loadView && SearchData.length == 0" mode="ios" style="padding: 20px 20px;">
+    <h4>
+      Opps! No hay comercios con esa categoría
+    </h4>
+    <ion-button size="small" mode="ios" (click)="viewAll()">Ver todas</ion-button>
+  </ion-card>
+  
+
+  <!--********************** Items Normales ********************************************************-->
+    <div *ngIf="SearchData.length > 0 && fk_items.length == 0" style="background-color: #FFFFFF;margin-top: 15px;">
+      <ion-row style="margin: 8px 15px;border: 0.5px solid #f0f0f0;" *ngFor="let store of SearchData;let i = index" (click)="itemPage(store)">
+        <!-- Imagen -->
+        <ion-col size="4" style="margin: 0 !important;padding: 0 !important;">
+          <div class="img_radius" [style.backgroundImage]="'url('+ store.img +')'">
+            <div class="close_in"  *ngIf="!store.open">
+              <span>NO DISPONIBLE EN ESTE MOMENTO</span>
+            </div>
+          </div>
+        </ion-col>
+        <!-- Imagen -->
+        <!-- Info -->
+        <ion-col size="8" class="wrap_info" style="font-size: 12px;border-left: 0.5px solid #f0f0f0;padding-left: 8px;">
+          <b style="font-size: 14px;">{{ store.title | slice:0:27 }}<i *ngIf="store.title.length > 27">...</i></b>
+          <small style="color: gray;font-size: 10px">
+            <span style="color: #ff6b01;"><ion-icon name="star"></ion-icon> {{ store.rating }}</span> | {{ store.type }}
+          </small><br>
+          <small style="color: gray;font-size: 10px">
+            Entrega en {{ store.delivery_time }}
+          </small><br />
+
+          <small *ngIf="store.max_distance > 0" style="color: hsl(144, 88%, 38%);">
+            Distancia: {{store.km}} km
+          </small><br *ngIf="store.max_distance > 0" />
+
+          <small *ngIf="store.max_distance == 0" style="color: red;">
+            Sin cobertura en tu ubicación.
+          </small><br *ngIf="store.max_distance == 0" />
+
+          <small *ngIf="store.delivery_charges_value.costs_ship == 0 && store.max_distance == 1">
+            Envio <span style="color: #0cb850;">Gratis</span> <span *ngIf="!store.open"> | Abre a las: <span style="color:red;">{{store.open_time}}</span></span>
+          </small>
+        </ion-col>
+        <!-- Info -->
+      </ion-row>
+    </div>
+  <!--********************** Items Normales ********************************************************-->
+
+  <!-- Skeletor -->
+  <ion-list *ngIf="loadBody == false && fk_items.length > 0" style="margin: 27px 8px;">
+    <ion-grid>
+        <span >
+            <ion-skeleton-text animated style="margin-left: 5px; width: 30%;height: 16px;"></ion-skeleton-text>
+        </span>
+        <ion-row >
+          <ion-col size="6">
+            <div>
+                <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div>
+                <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div>
+                <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div>
+                <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+              <div>
+                  <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div>
+                  <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div>
+                  <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div>
+                  <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+              </div>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-list>
+  <!-- /Skeletor -->
+  <ion-list *ngIf="loadBody == true && fk_items.length > 0" style="margin: 25px 10px;">
+    <ion-grid >
+      <span style="font-size: 14px;margin: 0 5px;">
+        Listado<br />
+      </span>
+      <ion-row style="padding-top: 15px;">
+        <ion-col size="6" *ngFor="let kind of fk_items" (click)="SearchColCategory(kind.id)">
+          <div>
+            <div class="wrap-img-cats" [style.backgroundImage]="'url('+ kind.Img +')'">
+              <span>{{kind.Name}}</span>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="text">
+  <ion-toolbar mode="ios">
+  
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      
+     <ion-tab-button routerLink="/home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>{{ text.home_footer_name }}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/home">
+        <ion-icon name="pin"></ion-icon>
+        <ion-label>{{ text.home_nearest }}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/cart" routerDirection="forward">
+        <ion-icon name="basket"></ion-icon>
+        <ion-label>{{ text.home_cart }}</ion-label>
+        <ion-badge *ngIf="count > 0">{{ count }}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button routerLink="/profile" routerDirection="forward">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>{{ text.home_profile }}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+  
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,42 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title style="font-family: 'SF Pro Display';font-weight: 500;">Verifica tu numero telefonico</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+  <!--Send SMS for otp-->
+  <div *ngIf="stateVerify == 'inputPhone'">
+    <ion-row>
+      <ion-col>
+        <h1 class="welcome_text">
+          Cuál es tu número<br />
+          de teléfono?
+        </h1>
+      </ion-col>
+    </ion-row>
+    <br />
+    <ion-row>
+      <ion-col size="2" style="margin-top: 10.5px !important;">
+       <span>+52</span>
+      </ion-col>
+      <ion-col size="10">
+        <ion-input type="tel" inputmode="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" [(ngModel)]="phone" maxlength="10" clearInput required name="phone" placeholder="Ej.- 6361054599"></ion-input>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <p style="color: rgb(85, 85, 85);font-family: 'SF Pro Display';font-weight: 400;font-style: normal;font-size: 14px;">
+      Toque "Siguiente" para obtener un codigo de confirmación via SMS, con esto podremos verificar su Número Telefonico.
+    </p>
+
+    <ion-row>
+      <ion-col class="inner-recap">
+        <div id="recaptcha-container"></div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!--Send SMS for otp-->
+</ion-content>
+<ion-footer style="text-align: center;">
+  <ion-button expand="block" [disabled]="!btnDisabled" (click)="verify()" style="font-family: 'SF Pro Display';font-weight: 500;font-size: 16px;">{{txtbnt}}</ion-button>
+</ion-footer>

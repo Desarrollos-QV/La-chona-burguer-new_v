@@ -1,0 +1,212 @@
+.wrap_info {
+    position: relative;
+  
+    ion-badge {
+      position: absolute;
+      top: 5px;right: 5px;
+      padding: 4px 8px;
+      background-color:#FF9505;
+      color: #fff;
+      font-family: 'SF Pro Display';
+      font-weight: 400;
+      font-size: 11px;
+      border-radius: 6px;
+      z-index: 50;
+    }
+}
+  
+      
+    
+.img_radius {
+  margin: auto;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  border-radius: 8px;
+
+  .close_in {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;top: 0;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.342);
+    text-align: center;
+
+    span {
+      position: absolute;
+      left: 0;right: 0;
+      width: 100%;
+      color: #fff;
+      top: 25%;
+      margin: auto;
+      font-size: 10px;
+      font-weight: 500;
+    }
+  }
+  
+  .tag_close {
+    position: absolute;
+    top: -2%;left: 0;
+    width: 100%;
+  }
+}
+
+  
+
+.search-input {
+    width: 100%;
+    padding-left: 15px;
+}
+
+.search-input > input {
+    width: 95%;
+    padding-bottom: 8px;padding-top: 8px;
+    padding-left: 20px;
+    border-radius: 30px;
+    border:0;
+    background-color: rgb(240, 240, 240);
+}
+
+.search-input > input::placeholder {
+    color: #000;   
+}
+
+.delete_item {
+    font-size: 16px;
+    color: red;
+}
+
+.wrap-img-cats {
+    width: 100%;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    text-align: center;
+}
+
+.wrap-img-cats::before {
+    position: absolute;
+    top: 0;left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+}
+
+.wrap-img-cats span {
+    position: absolute;
+    top: 32px;left: 0;right: 0;
+    margin: auto;
+    color: #fff;
+    font-family: sans-serif, 700;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+  // Elementos Favoritos
+  
+  .favs-items .wrap-img-favs {
+    width: 75px;
+    height: 75px;
+    margin-left: 2.5px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 10px rgba(173,173,173,1);
+    border-radius: 5px;
+  }
+  
+  .favs-items ion-label {
+    margin-left: 15px;
+    padding: 0;
+  }
+  
+  .favs-items ion-label a {
+    text-decoration: none;
+  }
+  
+  .favs-items ion-label a > small {
+    color: #4c4c4c;
+  }
+  
+  .favs-items h2 {
+    color: #000;
+  }
+  
+  .favs-items ion-label a .info {
+    margin-top: 5px;
+  }
+  
+  .favs-items ion-label a .info span {
+    font-size: 11px;
+    color: #4c4c4c;
+    display: inline-block;
+  }
+  
+  .favs-items ion-label a .info span.pl-10 {
+    padding-left: 10px;
+  }
+  
+  .favs-items ion-label a .info span strong {
+    font-size: 10px;
+    padding-bottom: 3px;
+    display: block;
+  }
+  
+  .favs-items .raiting {
+    position: absolute;
+    right: 10px;top: 10px;
+    padding: 2px 10px;
+    background-color:green;
+    color: #fff;
+    border-radius: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+  }
+  
+  
+  
+  .favs-items .iconFavs {
+    position: absolute;
+    right: 10px;bottom: 10px;
+    padding: 2px 10px;
+    color: red;
+    font-size: 16px;
+  }
+  
+  .favs-items .Abierto {
+    color: #08a82a;
+  }
+  
+  .favs-items .Cerrado {
+    color: red;
+  }
+  
+  .SearchCat {
+      position: absolute;
+      top: 0;left: 0;
+      width: 100%;
+      padding: 15px;
+      background-color: rgb(243, 243, 243);
+  }
+
+  
+.tag_close {
+  position: absolute;
+  top: -8px;left: 0;
+  width: 100%;
+
+}
+
+.img_radius {
+  margin: auto;
+  overflow: hidden;
+
+  img {
+    border-radius: 5px;
+  }
+}

@@ -1,0 +1,91 @@
+<ion-header no-border>
+<ion-toolbar color="primary">
+<ion-buttons slot="start" routerLink="/home" routerDirection="root">
+    <ion-icon name="home" style="font-size: 29px"></ion-icon>
+    </ion-buttons>
+
+<ion-buttons slot="end"><ion-button fill="outline" mode="ios" size="small" routerLink="/order" routerDirection="forward">View Order Detail</ion-button></ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+
+<ion-content mode="ios">
+
+
+<div style="width:100%;background-color: #FF0017;height: 80px;color:white">&nbsp;</div>
+
+<ion-card mode="ios" style="margin-top: -15%;background-color: white;width: 98%;margin-left: 1%" class="welcome-card">
+
+<ion-card-header>
+
+<ion-card-title>{{ text.confirm_title }}</ion-card-title>
+<ion-card-subtitle><ion-icon name="restaurant"></ion-icon> {{ data.store }}</ion-card-subtitle>
+
+</ion-card-header>
+
+</ion-card>
+
+<div class="ion-padding">
+
+<p style="font-size: 12px" *ngIf="status == 0">Pedido realizado con éxito. Esperando confirmación del restaurante</p>
+<p style="font-size: 12px" *ngIf="status == 1 && type == 1">Orden confirmada. Tu comida está siendo preparada.</p>
+<p style="font-size: 12px" *ngIf="status == 1.5 && type == 1">Buscando Socio Repartidor</p>
+<p style="font-size: 12px" *ngIf="status == 1 && type == 2">Orden confirmada. Tu comida está siendo preparada, Se te notificará cuando esté lista</p>
+<p style="font-size: 12px" *ngIf="status == 1 && type == 7">Tu orden está lista para recoger</p>
+<p style="font-size: 12px" *ngIf="status == 3">Se ha asignado un repartidor a tu pedido.</p>
+<p style="font-size: 12px" *ngIf="status == 4">Tu Orden esta en ruta!!</p>
+
+<div class="map-wrapper" *ngIf="status == 4">
+    <div #map id="map"></div>
+    <p>{{address}}</p>
+</div>
+  
+<ion-progress-bar value="{{ progress }}" buffer="0.5"></ion-progress-bar>
+</div>
+
+<ion-card mode="ios" class="welcome-card" style="width: 98%;margin-left: 1%">
+
+<ion-card-header>
+
+<ion-card-title>Order Status</ion-card-title>
+
+</ion-card-header>
+
+<ion-list lines="none">
+
+<ion-item routerLink="/order" routerDirection="forward">
+    <ion-icon slot="start" color="primary" name="cart"></ion-icon>
+    <ion-label>Pedido realizado</ion-label>
+</ion-item>
+
+<ion-item>
+    <ion-icon slot="start" [color]="getColor(1)" name="checkmark-circle"></ion-icon>
+    <ion-label [class.light]="status < 1">Orden confirmada</ion-label>
+</ion-item>
+
+<ion-item *ngIf="type == 1">
+    <ion-icon slot="start" [color]="getColor(1.5)" name="search"></ion-icon>
+    <ion-label [class.light]="status < 1.5">Buscando Socio Repartidor</ion-label>
+</ion-item>
+
+<ion-item *ngIf="type == 1">
+    <ion-icon slot="start" [color]="getColor(3)" name="link"></ion-icon>
+    <ion-label [class.light]="status < 3">Repartidor asignado</ion-label>
+</ion-item>
+
+<ion-item *ngIf="type == 1">
+    <ion-icon slot="start" [color]="getColor(4)" name="bus"></ion-icon>
+    <ion-label [class.light]="status < 4">Orden recogida</ion-label>
+</ion-item>
+
+<ion-item *ngIf="type != 1">
+    <ion-icon slot="start" [color]="getColor(7)" name="walk"></ion-icon>
+    <ion-label [class.light]="type < 7">Listo para  recoger</ion-label>
+</ion-item>
+
+
+</ion-list>
+
+</ion-card>
+
+</ion-content>

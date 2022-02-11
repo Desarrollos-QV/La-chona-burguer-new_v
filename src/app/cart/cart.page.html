@@ -1,0 +1,150 @@
+<ion-header no-border>
+<ion-toolbar color="white">
+<ion-buttons slot="start" mode="ios">
+    <ion-back-button></ion-back-button>
+    <ion-title *ngIf="data && data.total > 0" style="font-size: 14px;">Verifica tu orden</ion-title>    
+    <!-- <ion-title *ngIf="data.total == 0"></ion-title> -->
+</ion-buttons>
+
+<ion-buttons slot="end" *ngIf="data">{{ data.total | currency }} &nbsp;</ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+
+<ion-content mode="ios">
+
+
+<div mode="ios" style="width: 100%;" class="welcome-card">
+  <ion-list id="skeleton" *ngIf="!data">
+  <ion-list-header>
+  <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+  </ion-list-header>
+
+  <ion-item *ngFor="let fake of fakeData">
+  <ion-thumbnail slot="start">
+  <ion-skeleton-text></ion-skeleton-text>
+  </ion-thumbnail>
+  <ion-label>
+  <h3>
+  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+  </h3>
+  <p>
+  <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+  </p>
+  <p>
+  <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+  </p>
+  </ion-label>
+  </ion-item>
+
+  </ion-list>
+
+  <ion-card-header *ngIf="data" style="text-align: center;">
+    <ion-card-title style="font-size: 18px" *ngIf="data.total == 0">Opps! tu carrito esta vacio</ion-card-title>
+    <ion-card-subtitle *ngIf="data.total > 0">{{ data.store }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content *ngIf="data" style="text-align: center;">
+    <img src="https://firebasestorage.googleapis.com/v0/b/deliveryapp-faa82.appspot.com/o/FCMImages%2Fempty-cart-.png?alt=media&token=ee0c95ce-e0af-4f70-887d-835857fed044" style="width: 100%;margin: 0 auto;padding-top:25px;" *ngIf="data.total == 0">
+    <ion-button routerLink="/home" style="margin: auto;" color="primary" routerDirection="root" *ngIf="data.total == 0">Realizar Busqueda</ion-button>
+
+    <ion-row class="border_bottom" *ngFor="let item of data.data">
+
+    <ion-col size="2">
+      <!-- <div class="pic_menu" [style.backgroundImage]="'url('+ item.img +')'"></div> -->
+      <span style="color: green;">{{ item.qty }}X</span>
+    </ion-col>
+    <ion-col size="7" style="padding: 0px 10px; text-align: left;">
+      <b>{{ item.item }}</b><br />
+      <span *ngIf="item.addon.length > 0">
+        <small *ngFor="let addon of item.addon"><br>{{addon.qty}}x {{ addon.name }}  {{ data.currency }}{{ addon.price }}</small>	
+      </span>
+      <br>
+      <ion-icon name="remove-circle-outline" style="font-size: 26px" color="danger" (click)="updateCart(item.id,0)"></ion-icon>
+      <ion-icon name="add-circle-outline" style="font-size: 26px;margin-left: 15px;margin-top: 10px" color="dark" (click)="updateCart(item.id,1)"></ion-icon>
+    </ion-col>
+    <ion-col size="3">
+    {{ item.price | currency}}
+    </ion-col>
+    </ion-row>
+
+  </ion-card-content>
+</div>
+
+<ion-row class="ion-padding fontSize" *ngIf="data && data.total > 0">
+
+  <ion-col size="8" class="border_bottom_only">{{ text.cart_total }}</ion-col>
+  <ion-col size="4" class="border_bottom_only">{{ data.item_total | currency }}</ion-col>
+
+  <ion-col size="8" class="border_bottom_only" *ngIf="data.d_charges.costs_ship > 0">{{ text.cart_delivery }}</ion-col>
+  <ion-col size="4" class="border_bottom_only" *ngIf="data.d_charges.costs_ship > 0">{{ data.d_charges.costs_ship  | currency}}</ion-col>
+
+
+  <ion-col size="8" class="border_bottom_only" *ngIf="data.d_charges.duration != 0">Tiempos de envio</ion-col>
+  <ion-col size="4" class="border_bottom_only" *ngIf="data.d_charges.duration != 0">{{ data.d_charges.duration}}</ion-col>
+
+  
+  <ion-col size="8" class="border_bottom_only" *ngIf="data.discount > 0">{{ text.cart_discount }}</ion-col>
+  <ion-col size="4" class="border_bottom_only" *ngIf="data.discount > 0">{{ data.discount | currency}}</ion-col>
+
+  <ion-col size="8" class="border_bottom_only" *ngIf="data.discount == 0">{{ text.cart_coupon }}</ion-col>
+  <ion-col size="4" class="border_bottom_only" *ngIf="data.discount == 0"><a (click)="coupen()">{{ text.cart_apply }}</a></ion-col>
+
+  <ion-col size="8" class="border_bottom_only">{{ text.cart_payable }}</ion-col>
+  <ion-col size="4" class="border_bottom_only"><b>{{ data.total | currency}}</b></ion-col>
+</ion-row>
+
+
+<div mode="ios" *ngIf="data && data.total > 0">
+  <ion-card-header>
+    <small>( El total de envió varia con base en la dirección de entrega )</small>
+  </ion-card-header>
+  
+
+  <ion-list>
+    <div class="item_address animate__animated animate__fadeInRight">
+      <div class="delivery_address" *ngIf="address">
+          <h2 class="d-flex">
+              <ion-icon name="pin"></ion-icon>
+              Entregar en:&nbsp;
+              <span class="ion-text-uppercase" style="color:#f04141;">{{address.type}}</span>
+              <span class="end" routerLink="/setaddress" routerDirection="forward" style="color:#f04141;">Cambiar</span>
+          </h2>
+          <p>{{address.address | slice:0:45}} <i *ngIf="address.address.length > 45">...</i> </p>
+      </div>
+    </div>
+  </ion-list>  
+</div>
+
+<div class="ion-padding" *ngIf="data && data.total > 0">
+  <ion-button expand="block" size="large" type="button" mode="ios" [disabled]="!address"  routerLink="/checkout" routerDirection="forward">Realizar compra</ion-button><br>
+</div>
+</ion-content>
+
+
+<ion-footer *ngIf="text">
+    <ion-toolbar mode="ios">
+    
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        
+       <ion-tab-button routerLink="/home">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>{{ text.home_footer_name }}</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/home">
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>{{ text.home_nearest }}</ion-label>
+        </ion-tab-button>
+    
+     
+        <ion-tab-button routerLink="/profile" routerDirection="forward">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{ text.home_profile }}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+    
+    </ion-toolbar>
+</ion-footer>

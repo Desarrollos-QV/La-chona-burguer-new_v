@@ -1,0 +1,229 @@
+.border_bottom
+{
+	border-bottom:1px solid #f3f3f3;
+	
+}
+
+.border_bottom_only
+{
+	border-bottom:1px solid #f3f3f3;
+	padding:10px 10px 10px 10px;
+}
+
+.fontSize
+{
+	font-size:13px;
+}
+
+.pic_menu {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position:center;
+	overflow: hidden;
+}
+
+ion-list {
+    margin: 0;
+    background: none;
+    padding: 0;
+
+    .item_address {
+        margin-bottom: 8px;
+        --animate-duration: .2s;
+
+        h1 {
+            padding: 13px 20px;
+            margin: 0;
+            color: var(--text-dark);
+            background: var(--white);
+            font-size: .9rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+       
+        .delivery_address {
+            padding: 13px 20px;
+            background: var(--white);
+    
+            h2 {
+                margin: 0;
+                color: var(--text-dark);
+                font-size: 0.9rem;
+                font-weight: 600; 
+                padding-bottom: 6px;
+    
+                ion-icon {
+                    color: var(--text-light);
+                    min-width: 19px;
+                    font-size: 1rem;
+    
+                }
+    
+                span {
+                    color: var(--primary);
+                    font-weight: 500;
+                }
+            }
+    
+            p {
+                margin: 0;
+                color: var(--text-light);
+                font-size: .83rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+      
+    }
+
+    .item_delivery {
+        margin-bottom: 8px;
+        --animate-duration: .4s;
+
+        h1 {
+            padding: 13px 20px;
+            margin: 0;
+            color: var(--text-dark);
+            background: var(--white);
+            font-size: .9rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .delivery_options {
+            padding: 13px 20px;
+            background: var(--white);
+    
+            h2 {
+                margin: 0;
+                color: var(--text-dark);
+                font-size: 0.9rem;
+                font-weight: 600; 
+                padding-bottom: 6px;
+    
+                ion-icon {
+                    color: var(--text-light);
+                    min-width: 19px;
+                    font-size: 1rem;
+    
+                }
+    
+                span {
+                    color: var(--primary);
+                    font-weight: 500;
+                }
+            }
+    
+            p {
+                margin: 0;
+                color: var(--text-light);
+                font-size: .83rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .item_list {
+        margin-bottom: 8px;
+        --animate-duration: .6s;
+
+        h1 {
+            padding: 13px 20px;
+            margin: 0;
+            color: var(--text-dark);
+            background: var(--white);
+            font-size: .9rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        ion-item {
+            margin-bottom: 1px;
+            --min-height: unset;
+
+            .item_inner {
+
+                .text_box {
+                    width: 100%;
+
+                    h3 {
+                        margin: 0;
+                        color: var(--text-black);
+                        font-size: 0.94rem;
+                        font-weight: 500;
+                        letter-spacing: 0.3px;
+                    }
+
+
+                    .buttons {
+                        padding-top: 13px;
+
+                        h5 {
+                            margin: 0;
+                            background: var(--bg-color);
+                            border-radius: 50px;
+                            font-weight: 400;
+                            font-size: .95rem;
+                            padding: 7px 19px;
+                            display: flex;
+                            align-items: center;
+                            min-width: fit-content;
+
+                            ion-icon {
+                                color: var(--primary);
+                                font-size: 1.15rem;
+                                padding: 0 2px;
+                                min-width: 21px;
+                            }
+                        }
+
+                        p {
+                            margin: 0;
+                            display: flex;
+                            align-items: center;
+                            border: 1px solid var(--primary);
+                            font-size: .87rem;
+                            font-weight: 500;
+                            border-radius: 50px;
+                            text-align: center;
+                            padding: 1px;
+
+                            span {
+                                display: block;
+                                min-width: 29px;
+                                color: var(--primary);
+                                font-size: 1.4rem;
+                                font-weight: 400;
+                                line-height: normal;
+                            }
+
+                            strong {
+                                display: block;
+                                min-width: 23px;
+                                font-size: 1rem;
+                            }
+                        }
+
+                        h4 {
+                            margin: 0;
+                            color: var(--text-black);
+                            font-size: .9rem;
+                            font-weight: 500;
+                            letter-spacing: .3px;
+                            min-width: 68px;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+}

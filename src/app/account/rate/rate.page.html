@@ -1,0 +1,105 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+
+  	<ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title *ngIf="type == 'store'">
+      Califica al Comercio
+    </ion-title>
+    
+    <ion-title *ngIf="type == 'staff'">
+      Califica al Repartidor
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+
+<form #form="ngForm" (ngSubmit)="giveRating(form.value)">
+
+<ion-list>
+
+<small>{{ text.rating_heading }}</small>
+<br><br>
+
+<ion-row style="font-size: 25px;color:#ff5722" *ngIf="star == 0">
+  <ion-col size="1" (click)="setStar(1)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(2)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(3)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(4)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(5)"><ion-icon name="star-outline"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row style="font-size: 25px;color:#ff5722" *ngIf="star == 1">
+  <ion-col size="1" (click)="setStar(1)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(2)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(3)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(4)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(5)"><ion-icon name="star-outline"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row style="font-size: 25px;color:#ff5722" *ngIf="star == 2">
+  <ion-col size="1" (click)="setStar(1)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(2)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(3)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(4)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(5)"><ion-icon name="star-outline"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row style="font-size: 25px;color:#ff5722" *ngIf="star == 3">
+  <ion-col size="1" (click)="setStar(1)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(2)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(3)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(4)"><ion-icon name="star-outline"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(5)"><ion-icon name="star-outline"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row style="font-size: 25px;color:#ff5722" *ngIf="star == 4">
+  <ion-col size="1" (click)="setStar(1)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(2)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(3)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(4)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(5)"><ion-icon name="star-outline"></ion-icon></ion-col>
+</ion-row>
+
+<ion-row style="font-size: 25px;color:#ff5722" *ngIf="star == 5">
+  <ion-col size="1" (click)="setStar(1)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(2)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(3)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(4)"><ion-icon name="star"></ion-icon></ion-col>
+  <ion-col size="1" (click)="setStar(5)"><ion-icon name="star"></ion-icon></ion-col>
+</ion-row>
+
+<ion-item *ngIf="type == 'staff'">
+  <ion-label>¿El repartidor realizó el proceso de sanitización del producto?</ion-label>
+  <ion-select placeholder="Select" ngModel name="sanit_process" required>
+    <ion-select-option value="1">SI</ion-select-option>
+    <ion-select-option value="0">NO</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item *ngIf="type == 'staff'">
+  <ion-label>¿El producto llegó en perfecto estado?</ion-label>
+  <ion-select placeholder="Select" ngModel name="status_prod" required>
+    <ion-select-option value="1">SI</ion-select-option>
+    <ion-select-option value="0">NO</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<br><br>
+<ion-item>
+  <ion-textarea ngModel name="comment" placeholder="{{ text.rating_msg }}"></ion-textarea>
+</ion-item>
+
+
+</ion-list>
+<br>
+<ion-button color="primary" expand="block" type="submit" [disabled]="form.invalid" mode="ios" size="large">{{ text.rating_button }}</ion-button>
+
+</form>
+
+
+</ion-content>
