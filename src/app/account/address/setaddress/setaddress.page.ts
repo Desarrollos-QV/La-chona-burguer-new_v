@@ -16,10 +16,12 @@ declare var google;
 export class SetaddressPage implements OnInit {
   
   data:any;
+  admin:any;
   searchQuery: any;
   hasSearch:any;
   address:any;
   LocationNow:any;
+  MyLocation = [];
   GoogleAutocomplete: any;
   autocomplete: { input: string; };
   autocompleteItems: any[];
@@ -45,7 +47,10 @@ export class SetaddressPage implements OnInit {
   ionViewWillEnter()
   {   
      
+      this.admin = JSON.parse(localStorage.getItem('admin'));
       this.autocomplete = { input: '' };
+      this.searchQuery = null;
+      this.hasSearch   = false;
       this.autocompleteItems = [];
       
       this.platform.ready().then( () => {
@@ -61,67 +66,28 @@ export class SetaddressPage implements OnInit {
       this.address = response.data;
     });
 
-    this.getAddressFromCoords(this.lat, this.lng);
-    // // Obtenemos la ubicación actual
-    // this.geolocation.getCurrentPosition().then((resp) => {
-    //   this.lat = resp.coords.latitude;
-    //   this.lng = resp.coords.longitude;
-      
-    // }).catch((error) => {
-    //   console.log('Error al obtener la ubicación', error);
-    // });
+     // Obtenemos la ubicación actual
+     this.geolocation.getCurrentPosition().then((resp) => {
+      this.lat = resp.coords.latitude;
+      this.lng = resp.coords.longitude;
+      this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
+    }).catch((error) => {
+      console.log('Error al obtener la ubicación', error);
+    });
   }
 
   getAddressFromCoords(lattitude, longitude) {
-    var geocoder = new google.maps.Geocoder;
-    let $this = this;
-    let options: NativeGeocoderOptions = {
-      useLocale: true,
-      maxResults: 2
-    };
-    this.nativeGeocoder.reverseGeocode(lattitude, longitude, options)
-    .then((result: NativeGeocoderResult[]) => {
-      this.LocationNow = "";
 
-      let responseAddress = [];
-      for (let [key, value] of Object.entries(result[0])) {
-
-        if(value.length > 0)
-        responseAddress.push(value);
-
-      }
-
-      responseAddress.reverse();
-      for (let value of responseAddress) {
-        this.LocationNow += value+", ";
-      }
-      this.LocationNow = this.LocationNow.slice(0, -2);
-    })
-    .catch((error: any) =>{ 
-      console.log("error =>",error);
-      var latlng = {lat: parseFloat(lattitude), lng: parseFloat(longitude)};
-      let responseAddress = [];
-      geocoder.geocode({'location': latlng}, function(result, status) {
-        if (status === 'OK') {
-        
-          $this.LocationNow = "";
-
-          for (let [key, value] of Object.entries(result[0])) {
-            responseAddress.push(value); 
-          }
-          
-          responseAddress.reverse();
-          
-          for (let value of responseAddress) {
-            $this.LocationNow += value+", ";
-          }
-          
-          $this.LocationNow = responseAddress[4];
-        } else {
-          console.log('Geocoder failed due to: ' + status);
-        }
-      });
+    this.server.GeocodeFromCoords(lattitude, longitude,this.admin.ApiKey_google).subscribe((data:any) => {
+      let formatted_address = data.results[0].formatted_address;
+      this.LocationNow = formatted_address;
+      this.MyLocation.push({
+        "lat"          : data.results[0].geometry.location.lat,
+        "lng"          : data.results[0].geometry.location.lng,
+        "address"      : this.LocationNow
+      }); 
     });
+   
   }
 
   search(ev)
@@ -197,16 +163,16 @@ export class SetaddressPage implements OnInit {
     });
   }
 
-  async saveAddress(item)
+  async saveAddress(item,type)
   {
     const loading = await this.loadingController.create({
       message: 'Guardando Dirección...',
     });
     await loading.present();
 
-    if (item == 'LocationNow') {
+    if (type == 'LocationNow') {
       var allData = {
-        address : this.LocationNow,
+        address : item.address,
         lat : this.lat,
         lng : this.lng,
         user_id : localStorage.getItem('user_id')
@@ -214,7 +180,7 @@ export class SetaddressPage implements OnInit {
 
       this.server.saveAddress(allData).subscribe((response:any) => {
         if (response.msg == 'done') {
-          localStorage.setItem("address",this.LocationNow);
+          localStorage.setItem("address",item.address,);
           localStorage.setItem('address_id',response.id);
           localStorage.setItem("current_lat",this.lat);
           localStorage.setItem('current_lng',this.lng);

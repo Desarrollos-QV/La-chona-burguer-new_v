@@ -49,7 +49,7 @@ export class CityPage implements OnInit {
   }
 
   OrderAz(data) {
-    data.sort(function(a, b){return a.name.toLowerCase().localeCompare(b.name.toLowerCase());})
+    data.sort(function(a, b){return a.name.localeCompare(b.name);})
   }
  
  async presentToast(txt) {
@@ -70,7 +70,7 @@ export class CityPage implements OnInit {
     {
         if (val && val.trim() != '') {
         this.data = this.data.filter((item) => {
-        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.name.indexOf(val) > -1);
         })
       }
     }

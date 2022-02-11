@@ -39,6 +39,13 @@ export class ServerService {
      });
   }
 
+  
+  GeocodeFromCoords(lat,lng,apikey)
+  {
+    return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key="+apikey)
+    .pipe(map(results => results)); 
+  }
+
   welcome()
   {
   	return this.http.get(this.url+'welcome')
