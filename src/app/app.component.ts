@@ -15,7 +15,7 @@ import { ServerService } from './service/server.service';
 export class AppComponent {
   
   appType:number = 0;
-  dir:string = "ltr";
+  dir:any = "ltr";
   text:any;
   apiKey: any;
   public appPages:any = [];

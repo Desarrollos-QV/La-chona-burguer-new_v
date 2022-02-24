@@ -67,7 +67,7 @@
   <!-- Save Address -->
   <ion-list *ngIf="!hasSearch">
     <ion-item-sliding *ngFor="let add of address">
-      <ion-item (click)="saveAddress(add)">
+      <ion-item (click)="saveAddress(add,0)">
         <ion-avatar slot="start">
           <ion-icon name="time" style="font-size: 22px;"></ion-icon>
         </ion-avatar>

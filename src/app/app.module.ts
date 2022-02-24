@@ -20,8 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { OptionPageModule } from './option/option.module';
-import { OfferPageModule } from './offer/offer.module';
-import { PayPal } from '@ionic-native/paypal/ngx';
+import { OfferPageModule } from './offer/offer.module'; 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Stripe } from '@ionic-native/stripe/ngx'; 
 
@@ -54,8 +53,7 @@ firebase.initializeApp(environment.firebase);
   
   providers: [
     Geolocation,
-    NativeGeocoder, 
-    PayPal,
+    NativeGeocoder,  
     StatusBar,
     SplashScreen,
     OneSignal,

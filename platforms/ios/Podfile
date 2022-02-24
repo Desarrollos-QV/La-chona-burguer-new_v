@@ -2,11 +2,11 @@
 source 'https://cdn.cocoapods.org/'
 platform :ios, '11.0'
 use_frameworks!
-target 'C:\ionic\la_chona_burguer\multicomercios\usuarios\platforms\ios\La chona Burger' do
-	project 'C:\ionic\la_chona_burguer\multicomercios\usuarios\platforms\ios\La chona Burger.xcodeproj'
+target 'La chona Burger' do
+	project 'La chona Burger.xcodeproj'
+	pod 'OneSignal', '2.15.2'
 	pod 'FBSDKCoreKit', '5.15.0'
 	pod 'FBSDKLoginKit', '5.15.0'
 	pod 'FBSDKShareKit', '5.15.0'
 	pod 'Firebase/Auth', '~> 8.8.0'
-	pod 'OneSignal', '2.15.2'
 end

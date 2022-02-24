@@ -11,15 +11,7 @@
 
 <ion-searchbar (ionInput)="search($event)" mode="ios" color="light"></ion-searchbar>
 
-<ion-list>
-<ion-radio-group>
-
-<ion-item *ngFor="let l of data">
-<ion-label><img src="{{ l.img }}" style="width: 30px"> {{ l.name }}</ion-label>
-<ion-radio color="primary" slot="start" value="{{ l.id }}" (ionSelect)="setLang(l.id,l.type)" [checked]="l.id == lid"></ion-radio>
-
-</ion-item>
-</ion-radio-group>
+<ion-list> 
 </ion-list>
 <br>
 <ion-button color="primary" expand="block" size="large" type="button" [disabled]="lid == 'none'" (click)="update()" mode="ios">Cambiar idioma</ion-button>

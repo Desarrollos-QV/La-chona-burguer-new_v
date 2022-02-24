@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../service/server.service';
 import { ToastController,LoadingController,NavController,AlertController } from '@ionic/angular';
-import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
 import { Stripe } from '@ionic-native/stripe/ngx';
 
 @Component({
@@ -44,8 +43,7 @@ export class CheckoutPage implements OnInit {
     public toastController: ToastController,
     public loadingController: LoadingController,
     public alertController: AlertController,
-    private nav: NavController,
-    private payPal: PayPal,
+    private nav: NavController, 
     private stripe: Stripe,
     
   )
@@ -306,41 +304,7 @@ export class CheckoutPage implements OnInit {
 
   payPaypal()
   { 
-      this.payPal.init({
-      PayPalEnvironmentProduction: this.paypal_id,
-      PayPalEnvironmentSandbox: this.paypal_id
-      }).then(() => {
-        // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-        this.payPal.prepareToRender('PayPalEnvironmentProduction', new PayPalConfiguration({
-          // Only needed if you get an "Internal Service Error" after PayPal login!
-          //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
-        })).then(() => {
-          let payment = new PayPalPayment(this.total_amount, 'MXN', 'Description', 'sale');
-          this.payPal.renderSinglePaymentUI(payment).then((res) => {
-            
-            this.payment_id = res.response.id;
-
-            if(this.payment_id)
-            {
-              this.order();
-            }
-
-          }, () => {
-            
-            this.presentToast("Paypal Transaction Cancelled");
-
-          });
-        }, () => {
-
-          this.presentToast("Error in configuration");
-
-        });
-      }, () => {
-        // 
-
-          this.presentToast("Error in initialization, maybe PayPal isn't supported");
-
-      });
+     
   }
 
   async payWithStripe()

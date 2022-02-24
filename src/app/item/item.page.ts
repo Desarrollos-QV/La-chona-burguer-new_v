@@ -174,15 +174,15 @@ export class ItemPage implements OnInit {
     });
   }
 
-  onScroll($event: CustomEvent<ScrollDetail>) {
+  onScroll(event) {
     
     // let title:  HTMLSpanElement = document.querySelector('.content_title');
     // let subTitle: HTMLSpanElement = document.querySelector('.title_header');
     let menuSub: HTMLDivElement = document.querySelector('.slide-menu');
     let ToolSub: HTMLDivElement = document.querySelector('.slide-tool');
     
-    if ($event && $event.detail && $event.detail.scrollTop) {
-      const scrollTop = $event.detail.scrollTop;
+    if (event && event.detail && event.detail.scrollTop) {
+      const scrollTop = event.detail.scrollTop;
       this.showToolbar = scrollTop >= 175;
 
       if (scrollTop >= 175) {
