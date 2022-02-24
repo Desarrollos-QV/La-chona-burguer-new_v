@@ -70,10 +70,18 @@ export class AddressPage implements OnInit {
     
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    this.map.addListener('tilesloaded', () => {
-      this.getAddressFromCoords(this.map.center.lat(), this.map.center.lng())
+    this.marker = new google.maps.Marker({
+      map: this.map,
+      draggable:true,
+      position:latLng
     });
+    this.marker.setVisible(true);
 
+    this.getAddressFromCoords(this.lat,this.lng);
+ 
+    google.maps.event.addListener(this.marker, 'dragend', (evt) => {
+      this.getAddressFromCoords(evt.latLng.lat(),evt.latLng.lng());
+    });
     loading.dismiss();
   }
  
@@ -137,31 +145,42 @@ export class AddressPage implements OnInit {
       message: 'Porfavor espere...',
     });
     await loading.present();
-
-    var allData = {
-      address : this.address,
-      type    : this.type_add,
-      lat     : this.map.center.lat(),
-      lng     : this.map.center.lng(),
-      user_id : localStorage.getItem('user_id')
-    }
-
-    this.server.saveAddress(allData).subscribe((response:any) => {
-      if (response.msg == 'done') {
-        localStorage.setItem("address",this.address);
-        localStorage.setItem('address_id',response.id);
-        localStorage.setItem("current_lat",this.map.center.lat());
-        localStorage.setItem('current_lng',this.map.center.lng());
-        
-        this.nav.navigateForward('home');
-        this.presentToast("Dirección guardada con éxito.",'success');  
-      }else {
-        this.presentToast(JSON.stringify(response.data),'danger');  
+ 
+    if (localStorage.getItem('user_id')) {
+      var allData = {
+        address : this.address,
+        type    : this.type_add,
+        lat     : this.map.center.lat(),
+        lng     : this.map.center.lng(),
+        user_id : localStorage.getItem('user_id')
       }
-      
+
+      this.server.saveAddress(allData).subscribe((response:any) => {
+        if (response.msg == 'done') {
+          localStorage.setItem("address",this.address);
+          localStorage.setItem('address_id',response.id);
+          localStorage.setItem("current_lat",this.map.center.lat());
+          localStorage.setItem('current_lng',this.map.center.lng());
+          
+          this.nav.navigateForward('home');
+          this.presentToast("Dirección guardada con éxito.",'success');  
+        }else {
+          this.presentToast(JSON.stringify(response.data),'danger');  
+        }
+        
+        loading.dismiss();
+        
+      });
+    }else {
+      localStorage.setItem("address",this.address);
+      localStorage.setItem('address_id',"0");
+      localStorage.setItem("current_lat",this.map.center.lat());
+      localStorage.setItem('current_lng',this.map.center.lng());
+        
+      this.nav.navigateForward('home');
+      this.presentToast("Dirección guardada con éxito.",'success');
       loading.dismiss();
-      
-    });
+    }
   }
 
   async presentToast(txt,color) {

@@ -46,108 +46,98 @@ export class AppComponent {
       this.admin = type;
     });
 
+    this.events.subscribe('user_login', (id) => {
+      this.subPush(id);
+    });
 
-    if(localStorage.getItem('admin'))
-    {
-      this.admin = JSON.parse(localStorage.getItem('admin'));
-    }
+    this.events.subscribe('text', (text) => {     
+      this.text = text;
+
+      this.appPages = [
+        {
+          title: text.home,
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: text.city,
+          url: '/city',
+          icon: 'pin'
+        }, 
+        {
+          title: text.account,
+          url: '/profile',
+          icon: 'person'
+        },
+        {
+          title: text.order,
+          url: '/order',
+          icon: 'cart'
+        }
+      ];
+    });
+
+    if(localStorage.getItem('admin')) this.admin = JSON.parse(localStorage.getItem('admin'));
 
     if(localStorage.getItem('app_text'))
     {
       this.text = JSON.parse(localStorage.getItem('app_text'));
 
       this.appPages = [
-      {
-        title: this.text.home,
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: this.text.city,
-        url: '/city',
-        icon: 'pin'
-      },
-      {
-        title: this.text.account,
-        url: '/profile',
-        icon: 'person'
-      },
-      {
-        title: this.text.order,
-        url: '/order',
-        icon: 'cart'
-      },
+        {
+          title: this.text.home,
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: this.text.city,
+          url: '/city',
+          icon: 'pin'
+        },
+        {
+          title: this.text.account,
+          url: '/profile',
+          icon: 'person'
+        },
+        {
+          title: this.text.order,
+          url: '/order',
+          icon: 'cart'
+        }
 
-  ];
-      
+      ]; 
     }
     else
     {
       var home:any      = "Home";
-      var city:any      = "Change City";
-      var lang:any      = "Language";
+      var city:any      = "Change City"; 
       var profile:any   = "My Account";
       var order:any     = "My Orders";
 
       this.appPages = [
-      {
-        title: home,
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: city,
-        url: '/city',
-        icon: 'pin'
-      },
-      {
-        title: profile,
-        url: '/profile',
-        icon: 'person'
-      },
-      {
-        title: order,
-        url: '/order',
-        icon: 'cart'
-      },
-
-  ];
+        {
+          title: home,
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: city,
+          url: '/city',
+          icon: 'pin'
+        },
+        {
+          title: profile,
+          url: '/profile',
+          icon: 'person'
+        },
+        {
+          title: order,
+          url: '/order',
+          icon: 'cart'
+        }
+      ];
     }
-
-    this.events.subscribe('text', (text) => {
-      
-      this.text = text;
-
-      this.appPages = [
-      {
-        title: text.home,
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: text.city,
-        url: '/city',
-        icon: 'pin'
-      },
-      // {
-      //   title: text.language,
-      //   url: '/lang',
-      //   icon: 'flag'
-      // },
-      {
-        title: text.account,
-        url: '/profile',
-        icon: 'person'
-      },
-      {
-        title: text.order,
-        url: '/order',
-        icon: 'cart'
-      },
-
-  ];
-
-    });
+ 
     
     if(localStorage.getItem('app_type'))
     {
@@ -158,21 +148,11 @@ export class AppComponent {
       else
       {
          this.dir = "ltr";
-      }
-      
+      } 
     }
-
-
-
+ 
 
     this.initializeApp();
-
-    this.events.subscribe('user_login', (id) => {
-
-    this.subPush(id);
-
-    });
-
   }
 
   assginAppType(ty)
@@ -186,9 +166,8 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString("#ffffff");
       this.statusBar.styleDefault();
-      this.subPush();
-    });
-
+      this.subPush(); 
+    }); 
   }
 
   subPush(id = 0)
@@ -216,14 +195,13 @@ export class AppComponent {
   }
 
   this.oneSignal.endInit();
-  }
-
+  } 
   
   logout()
   {
     localStorage.setItem('user_id',null);
-
-    this.nav.navigateForward('/login');
+    localStorage.removeItem('user_id');
+    this.nav.navigateForward('/welcome');
   }
     
   async loadData(city_id)

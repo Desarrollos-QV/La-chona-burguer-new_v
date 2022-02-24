@@ -1,22 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/card.io.cordova.mobilesdk/www/cdv-plugin-card-io.js",
-        "id": "card.io.cordova.mobilesdk.CardIO",
-        "pluginId": "card.io.cordova.mobilesdk",
-        "clobbers": [
-            "CardIO"
-        ]
-    },
-    {
-        "file": "plugins/com.paypal.cordova.mobilesdk/www/cdv-plugin-paypal-mobile-sdk.js",
-        "id": "com.paypal.cordova.mobilesdk.PayPalMobile",
-        "pluginId": "com.paypal.cordova.mobilesdk",
-        "clobbers": [
-            "PayPalMobile"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-facebook4/www/facebook-browser.js",
         "id": "cordova-plugin-facebook4.FacebookConnectPluginBrowser",
         "pluginId": "cordova-plugin-facebook4",
@@ -105,19 +89,25 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-        "id": "cordova-plugin-ionic-webview.IonicWebView",
-        "pluginId": "cordova-plugin-ionic-webview",
+        "file": "plugins/cordova-plugin-idfa/www/Idfa.js",
+        "id": "cordova-plugin-idfa.Idfa",
+        "pluginId": "cordova-plugin-idfa",
+        "merges": [
+            "cordova.plugins.idfa"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-sign-in-with-apple/www/sign-in-with-apple.js",
+        "id": "cordova-plugin-sign-in-with-apple.SignInWithApple",
+        "pluginId": "cordova-plugin-sign-in-with-apple",
         "clobbers": [
-            "Ionic.WebView"
+            "cordova.plugins.SignInWithApple"
         ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "card.io.cordova.mobilesdk": "2.1.0",
-    "com.paypal.cordova.mobilesdk": "3.5.0",
     "cordova-plugin-facebook4": "6.4.0",
     "cordova-plugin-firebase-authentication": "5.1.0",
     "cordova-plugin-geolocation": "4.1.0",
@@ -129,8 +119,8 @@ module.exports.metadata =
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-add-swift-support": "2.0.2",
     "cordova-plugin-nativegeocoder": "3.4.1",
-    "cordova-plugin-wkwebview-engine": "1.2.2",
-    "cordova-plugin-ionic-webview": "5.0.0"
+    "cordova-plugin-idfa": "2.0.0",
+    "cordova-plugin-sign-in-with-apple": "0.1.2"
 }
 // BOTTOM OF METADATA
 });

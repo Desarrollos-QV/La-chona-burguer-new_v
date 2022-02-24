@@ -1,4 +1,5 @@
-cordova.define("com.paypal.cordova.mobilesdk.PayPalMobile", function(require, exports, module) { //
+cordova.define("com.paypal.cordova.mobilesdk.PayPalMobile", function(require, exports, module) {
+//
 // Copyright (c) 2014 PayPal. All rights reserved.
 //
 

@@ -25,14 +25,6 @@
       "GPS_REQUIRED": "true"
     }
   },
-  "com.paypal.cordova.mobilesdk": {
-    "source": {
-      "type": "registry",
-      "id": "com.paypal.cordova.mobilesdk"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-stripe": {
     "source": {
       "type": "registry",
@@ -110,18 +102,18 @@
     "is_top_level": false,
     "variables": {}
   },
-  "cordova-plugin-wkwebview-engine": {
+  "cordova-plugin-idfa": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-wkwebview-engine"
+      "id": "cordova-plugin-idfa"
     },
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-ionic-webview": {
+  "cordova-plugin-sign-in-with-apple": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-ionic-webview@latest"
+      "id": "cordova-plugin-sign-in-with-apple"
     },
     "is_top_level": true,
     "variables": {}

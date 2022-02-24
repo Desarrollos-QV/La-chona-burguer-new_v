@@ -10,7 +10,7 @@
           "NSLocationWhenInUseUsageDescription": [
             {
               "xml": "<string>We use your location for the full functionality of certain features of the app. such as tracking an order or providing service in your area. </string>",
-              "count": 2,
+              "count": 1,
               "mode": "merge",
               "id": "config.xml"
             }
@@ -63,14 +63,6 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"CardIO\"><param name=\"ios-package\" onload=\"false\" value=\"CardIOCordovaPlugin\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"PayPalMobile\"><param name=\"ios-package\" onload=\"true\" value=\"PayPalMobileCordovaPlugin\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
               "count": 1
             },
@@ -115,22 +107,6 @@
               "count": 1
             },
             {
-              "xml": "<allow-navigation href=\"ionic://*\" />",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"deployment-target\" value=\"11.0\" />",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"IonicWebView\"><param name=\"ios-package\" value=\"CDVWKWebViewEngine\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"NativeGeocoder\"><param name=\"ios-package\" value=\"NativeGeocoder\" /></feature>",
               "count": 1
             },
@@ -157,6 +133,14 @@
             {
               "xml": "<feature name=\"OneSignalPush\"><param name=\"ios-package\" value=\"OneSignalPush\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"Idfa\"><param name=\"ios-package\" value=\"IdfaPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SignInWithApple\"><param name=\"ios-package\" value=\"SignInWithApple\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -180,16 +164,30 @@
             }
           ]
         }
+      },
+      "*/Entitlements-Debug.plist": {
+        "parents": {
+          "com.apple.developer.applesignin": [
+            {
+              "xml": "<array><string>Default</string></array>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "*/Entitlements-Release.plist": {
+        "parents": {
+          "com.apple.developer.applesignin": [
+            {
+              "xml": "<array><string>Default</string></array>",
+              "count": 1
+            }
+          ]
+        }
       }
     }
   },
   "installed_plugins": {
-    "card.io.cordova.mobilesdk": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
-    "com.paypal.cordova.mobilesdk": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
     "cordova-plugin-add-swift-support": {
       "PACKAGE_NAME": "com.lachona.burger"
     },
@@ -214,9 +212,6 @@
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "com.lachona.burger"
     },
-    "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
     "cordova-plugin-nativegeocoder": {
       "LOCATION_WHEN_IN_USE_DESCRIPTION": "Use geocoder service",
       "PACKAGE_NAME": "com.lachona.burger"
@@ -232,26 +227,16 @@
     },
     "onesignal-cordova-plugin": {
       "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-idfa": {
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-sign-in-with-apple": {
+      "PACKAGE_NAME": "com.lachona.burger"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "card.io.cordova.mobilesdk.CardIO",
-      "file": "plugins/card.io.cordova.mobilesdk/www/cdv-plugin-card-io.js",
-      "pluginId": "card.io.cordova.mobilesdk",
-      "clobbers": [
-        "CardIO"
-      ]
-    },
-    {
-      "id": "com.paypal.cordova.mobilesdk.PayPalMobile",
-      "file": "plugins/com.paypal.cordova.mobilesdk/www/cdv-plugin-paypal-mobile-sdk.js",
-      "pluginId": "com.paypal.cordova.mobilesdk",
-      "clobbers": [
-        "PayPalMobile"
-      ]
-    },
     {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
@@ -317,22 +302,6 @@
       ]
     },
     {
-      "id": "cordova-plugin-ionic-webview.IonicWebView",
-      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-      "pluginId": "cordova-plugin-ionic-webview",
-      "clobbers": [
-        "Ionic.WebView"
-      ]
-    },
-    {
-      "id": "cordova-plugin-ionic-webview.ios-wkwebview-exec",
-      "file": "plugins/cordova-plugin-ionic-webview/src/www/ios/ios-wkwebview-exec.js",
-      "pluginId": "cordova-plugin-ionic-webview",
-      "clobbers": [
-        "cordova.exec"
-      ]
-    },
-    {
       "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
       "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
       "pluginId": "cordova-plugin-nativegeocoder",
@@ -371,22 +340,37 @@
       "clobbers": [
         "OneSignal"
       ]
+    },
+    {
+      "id": "cordova-plugin-idfa.Idfa",
+      "file": "plugins/cordova-plugin-idfa/www/Idfa.js",
+      "pluginId": "cordova-plugin-idfa",
+      "merges": [
+        "cordova.plugins.idfa"
+      ]
+    },
+    {
+      "id": "cordova-plugin-sign-in-with-apple.SignInWithApple",
+      "file": "plugins/cordova-plugin-sign-in-with-apple/www/sign-in-with-apple.js",
+      "pluginId": "cordova-plugin-sign-in-with-apple",
+      "clobbers": [
+        "cordova.plugins.SignInWithApple"
+      ]
     }
   ],
   "plugin_metadata": {
-    "card.io.cordova.mobilesdk": "2.1.0",
-    "com.paypal.cordova.mobilesdk": "3.5.0",
     "cordova-plugin-add-swift-support": "2.0.2",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "6.4.0",
     "cordova-plugin-firebase-authentication": "5.1.0",
     "cordova-plugin-geolocation": "4.1.0",
     "cordova-plugin-ionic-keyboard": "2.2.0",
-    "cordova-plugin-ionic-webview": "5.0.0",
     "cordova-plugin-nativegeocoder": "3.4.1",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-stripe": "1.5.3",
-    "onesignal-cordova-plugin": "2.11.1"
+    "onesignal-cordova-plugin": "2.11.1",
+    "cordova-plugin-idfa": "2.0.0",
+    "cordova-plugin-sign-in-with-apple": "0.1.2"
   }
 }

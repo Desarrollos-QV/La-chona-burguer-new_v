@@ -49,6 +49,8 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>localhost</key>
+			<dict/>
 			<key>m.facebook.com</key>
 			<dict/>
 			<key>graph.facebook.com</key>
@@ -69,8 +71,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location for the full functionality of certain features of the app. such as tracking an order or providing service in your area. </string>
 	<key>FacebookAppID</key>
 	<string>364418121794157</string>
 	<key>FacebookDisplayName</key>
@@ -97,5 +97,7 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location for the full functionality of certain features of the app. such as tracking an order or providing service in your area. </string>
 </dict>
 </plist>

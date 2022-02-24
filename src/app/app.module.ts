@@ -30,6 +30,9 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 // Facebook
 import { Facebook } from '@ionic-native/facebook/ngx';
 
+// AppleSigning
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
+
 import { environment } from '../environments/environment';
 import * as firebase from 'firebase/app'; 
 
@@ -62,6 +65,7 @@ firebase.initializeApp(environment.firebase);
     Keyboard,
     Stripe,
     Facebook, 
+    SignInWithApple,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 
   ],

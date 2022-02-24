@@ -6,6 +6,9 @@ import { ToastController,NavController,Platform,LoadingController } from '@ionic
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 // Facebook
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+// Apple
+import { SignInWithApple, AppleSignInResponse, AppleSignInErrorResponse, ASAuthorizationAppleIDRequest } from '@ionic-native/sign-in-with-apple/ngx';
+
 
 @Component({
   selector: 'app-login',
@@ -23,6 +26,8 @@ export class LoginPage implements OnInit {
   users = { id: '', name: '', email: '', picture: { data: { url: '' } } };
   
   isKeyboardHide=true;
+
+  btn_appleSign:boolean = false;
   constructor(
     private route: ActivatedRoute,
     public server : ServerService,
@@ -31,7 +36,9 @@ export class LoginPage implements OnInit {
     private nav: NavController,
     public loadingController: LoadingController,
     public events: EventsService,
-    private fb: Facebook){
+    private fb: Facebook,
+    private signInWithApple: SignInWithApple
+  ){
 
     this.text = JSON.parse(localStorage.getItem('app_text'));
 
@@ -77,6 +84,10 @@ export class LoginPage implements OnInit {
     });
   }
 
+  /**
+   * Login Facebook
+   * @param data 
+   */
   async loginfb(data)
   {
     const loading = await this.loadingController.create({
@@ -121,6 +132,33 @@ export class LoginPage implements OnInit {
     });
 
     this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
+  }
+
+  /**
+   * Login Apple
+   * @param data
+   */
+  async loginApple(data)
+  {
+   
+  }
+
+  AppleLogin() {
+    this.signInWithApple.signin({
+      requestedScopes: [
+        ASAuthorizationAppleIDRequest.ASAuthorizationScopeFullName,
+        ASAuthorizationAppleIDRequest.ASAuthorizationScopeEmail
+      ]
+    })
+    .then((res: AppleSignInResponse) => {
+      // https://developer.apple.com/documentation/signinwithapplerestapi/verifying_a_user
+      alert('Send token to apple for verification: ' + res.identityToken);
+      console.log(res);
+    })
+    .catch((error: AppleSignInErrorResponse) => {
+      alert(error.code + ' ' + error.localizedDescription);
+      console.log(error,error.code + ' ' + error.localizedDescription);
+    });
   }
 
   async presentToast(txt) {

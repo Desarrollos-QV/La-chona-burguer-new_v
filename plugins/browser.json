@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "com.paypal.cordova.mobilesdk": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
     "cordova-plugin-facebook4": {
       "APP_ID": "364418121794157",
       "APP_NAME": "La Chona Burguer",
@@ -45,17 +42,14 @@
     "cordova-plugin-nativegeocoder": {
       "PACKAGE_NAME": "com.lachona.burger"
     },
-    "cordova-plugin-wkwebview-engine": {
+    "cordova-plugin-idfa": {
       "PACKAGE_NAME": "com.lachona.burger"
     },
-    "cordova-plugin-ionic-webview": {
+    "cordova-plugin-sign-in-with-apple": {
       "PACKAGE_NAME": "com.lachona.burger"
     }
   },
   "dependent_plugins": {
-    "card.io.cordova.mobilesdk": {
-      "PACKAGE_NAME": "com.lachona.burger"
-    },
     "cordova-plugin-add-swift-support": {
       "PACKAGE_NAME": "com.lachona.burger"
     }

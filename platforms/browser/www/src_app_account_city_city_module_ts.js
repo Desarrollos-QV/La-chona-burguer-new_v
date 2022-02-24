@@ -104,7 +104,7 @@ let CityPage = class CityPage {
         });
     }
     OrderAz(data) {
-        data.sort(function (a, b) { return a.name.toLowerCase().localeCompare(b.name.toLowerCase()); });
+        data.sort(function (a, b) { return a.name.localeCompare(b.name); });
     }
     presentToast(txt) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
@@ -122,7 +122,7 @@ let CityPage = class CityPage {
         if (val && val.length > 0) {
             if (val && val.trim() != '') {
                 this.data = this.data.filter((item) => {
-                    return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+                    return (item.name.indexOf(val) > -1);
                 });
             }
         }
