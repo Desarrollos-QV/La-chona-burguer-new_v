@@ -20,7 +20,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { OptionPageModule } from './option/option.module';
-import { OfferPageModule } from './offer/offer.module'; 
+import { OfferPageModule } from './offer/offer.module';
+import { PayPal } from '@ionic-native/paypal/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Stripe } from '@ionic-native/stripe/ngx'; 
 
@@ -28,6 +29,9 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 // Facebook
 import { Facebook } from '@ionic-native/facebook/ngx';
+
+// AppleSigning
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 
 import { environment } from '../environments/environment';
 import * as firebase from 'firebase/app'; 
@@ -53,13 +57,15 @@ firebase.initializeApp(environment.firebase);
   
   providers: [
     Geolocation,
-    NativeGeocoder,  
+    NativeGeocoder, 
+    PayPal,
     StatusBar,
     SplashScreen,
     OneSignal,
     Keyboard,
     Stripe,
     Facebook, 
+    SignInWithApple,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 
   ],

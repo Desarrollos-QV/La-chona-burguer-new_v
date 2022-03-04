@@ -157,51 +157,81 @@ export class HomePage {
   }
 
   ionViewWillEnter()
-  {  
-    console.log('iniciamos');
+  {   
     this.headr = document.getElementsByClassName('header')[0];
     this.address = localStorage.getItem("address");
     this.menu.enable(true);
     this.keyboard.onKeyboardWillShow().subscribe(()=>{this.isKeyboardHide=false;});
     this.keyboard.onKeyboardWillHide().subscribe(()=>{this.isKeyboardHide=true;});
 
-    if (!localStorage.getItem('user_id')) {
-      this.nav.navigateRoot('/welcome');
-    }else {
+    // if (!localStorage.getItem('user_id')) {
+    //   this.nav.navigateRoot('/welcome');
+    // }else {
 
-      if(localStorage.getItem('user_id') == 'null')
-      {
-        this.nav.navigateRoot('/welcome');
-      }
-    }
-
-    if(localStorage.getItem('app_text'))
-    {
-      this.text = JSON.parse(localStorage.getItem('app_text'));
-    }
-
-    if (!localStorage.getItem("address") || localStorage.getItem("address") == 'null') {
-      this.nav.navigateForward('setaddress');
-    }
-
-    if (this.city_id != localStorage.getItem('city_id')) {
-      this.city_name = localStorage.getItem('city_name');
-      this.city_id   = localStorage.getItem('city_id');
-      this.loadData(localStorage.getItem('city_id')+"?ss=ss");
-    }
+    //   if(localStorage.getItem('user_id') == 'null')
+    //   {
+    //     this.nav.navigateRoot('/welcome');
+    //   }
+    // }
     
-    this.server.cartCount(localStorage.getItem('cart_no')+"?user_id="+localStorage.getItem('user_id')).subscribe((response:any) => {
-      this.count = response.data;
-      this.order = response.order;
-    });
+
+    if (!localStorage.getItem('city_id') || localStorage.getItem('city_id') == 'null') {
+      this.nav.navigateForward('city');
+    }else {
+      this.city_id   = localStorage.getItem('city_id');
+    }
+
+    // Verificamos la direccion de entrega.
+    if (!localStorage.getItem("address") || localStorage.getItem("address") == 'null') this.nav.navigateForward('setaddress');
+ 
+
+    // Obtenemos el app_text
+    if(localStorage.getItem('app_text')) this.text = JSON.parse(localStorage.getItem('app_text'));
+ 
+    // Verificamos al usuario
     this.verifyUser();
     
+    // Cargamos todos los Datos
+    this.loadData(localStorage.getItem('city_id')+"?ss=ss");
   }
 
   ngOnInit()
   {
     this.searchQuery = null;
     this.hasSearch   = false; 
+  }
+
+  verifyUser()
+  {
+    this.server.userInfo(localStorage.getItem('user_id')).subscribe((response:any) => {
+      if (response.data) {
+        if (response.data.phone == 'null') {
+         this.presentToast("Te recomendamos agregar un número telefonico a tu cuenta","warning");
+          //this.nav.navigateBack('/chkphone');
+        }else if (response.data.status == 1) {
+          this.nav.navigateBack('/locked')
+        }else if (response.data.password == response.data.pswfacebook) {
+          this.presentToast("Te recomendamos cambiar tu contraseña","danger");
+        }
+
+        // Obtenemos el carrito de compras
+        this.server.cartCount(localStorage.getItem('cart_no')+"?user_id="+localStorage.getItem('user_id')).subscribe((response:any) => {
+          this.count = response.data;
+          this.order = response.order;
+        });
+
+        if (this.city_id != localStorage.getItem('city_id')) {
+          this.city_name = localStorage.getItem('city_name');
+          this.city_id   = localStorage.getItem('city_id');
+          this.loadData(localStorage.getItem('city_id')+"?ss=ss");
+        }
+
+        
+      }else {
+        localStorage.removeItem('user_id');
+        // this.nav.navigateBack('/welcome')
+      }
+    });
   }
 
   clearSearch() {
@@ -268,10 +298,10 @@ export class HomePage {
         this.ComerceRest.push(element);
       }
 
-      this.Content.scrollToPoint(0,0,300);
-      this.domCtrl.write(() => {
-        this.renderer.setStyle(this.headr, 'transition', 'margin-top 300ms');
-      });
+      // this.Content.scrollToPoint(0,0,300);
+      // this.domCtrl.write(() => {
+      //   this.renderer.setStyle(this.headr, 'transition', 'margin-top 300ms');
+      // });
 
       // Generamos el numero random para los banners
       let min = 5;
@@ -311,26 +341,7 @@ export class HomePage {
       }
     }, 500);
   }
-
-  verifyUser()
-  {
-    this.server.userInfo(localStorage.getItem('user_id')).subscribe((response:any) => {
-      if (response.data) {
-        if (response.data.phone == 'null') {
-         this.presentToast("Te recomendamos agregar un número telefonico a tu cuenta","warning");
-          //this.nav.navigateBack('/chkphone');
-        }else if (response.data.status == 1) {
-          this.nav.navigateBack('/locked')
-        }else if (response.data.password == response.data.pswfacebook) {
-          this.presentToast("Te recomendamos cambiar tu contraseña","danger");
-        }
-      }else {
-        localStorage.removeItem('user_id');
-        this.nav.navigateBack('/welcome')
-      }
-    });
-  }
-
+ 
   GetRecentStore(data) {
     this.RecentsStore = [];
     let last = data.length;

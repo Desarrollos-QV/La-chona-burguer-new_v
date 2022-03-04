@@ -1,5 +1,8 @@
 {
     "CoreLocation.framework": 2,
     "SystemConfiguration.framework": 1,
+    "AdSupport.framework": 1,
+    "AppTrackingTransparency.framework": 1,
+    "AuthenticationServices.framework": 1,
     "WebKit.framework": 1
 }

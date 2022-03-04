@@ -70,14 +70,12 @@
 			<dict/>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>We use your the camera of your device only to add a profile picture</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use your location for the full functionality of certain features of the app. such as tracking an order or providing service in your area. </string>
-	<key>NSMainNibFile</key>
-	<string></string>
 	<key>NSMainNibFile~ipad</key>
 	<string></string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We use your location for the full functionality of certain features of the Application. such as tracking an order or providing services in your area. It is necessary to know your current location in order to provide you with a better service, quote shipping costs and offer you the best possible cost at the time of making your purchase.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -15,18 +15,12 @@
               "id": "config.xml"
             }
           ],
-          "NSCameraUsageDescription": [
+          "NSUserTrackingUsageDescription": [
             {
-              "xml": "<string>We use your the camera of your device only to add a profile picture</string>",
+              "xml": "<string>We use your location for the full functionality of certain features of the Application. such as tracking an order or providing services in your area. It is necessary to know your current location in order to provide you with a better service, quote shipping costs and offer you the best possible cost at the time of making your purchase.</string>",
               "count": 1,
               "mode": "merge",
               "id": "config.xml"
-            }
-          ],
-          "UIBackgroundModes": [
-            {
-              "xml": "<array><string>remote-notification</string></array>",
-              "count": 1
             }
           ],
           "FacebookAppID": [
@@ -64,6 +58,12 @@
               "xml": "<array><string>fbapi</string><string>fb-messenger-api</string><string>fbauth2</string><string>fbshareextension</string></array>",
               "count": 1
             }
+          ],
+          "UIBackgroundModes": [
+            {
+              "xml": "<array><string>remote-notification</string></array>",
+              "count": 1
+            }
           ]
         }
       },
@@ -71,35 +71,7 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"CordovaStripe\"><param name=\"ios-package\" value=\"CordovaStripe\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"OneSignalPush\"><param name=\"ios-package\" value=\"OneSignalPush\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"CDVIonicKeyboard\"><param name=\"ios-package\" onload=\"true\" value=\"CDVIonicKeyboard\" /></feature>",
+              "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
               "count": 1
             },
             {
@@ -135,11 +107,47 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+              "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CDVIonicKeyboard\"><param name=\"ios-package\" onload=\"true\" value=\"CDVIonicKeyboard\" /></feature>",
               "count": 1
             },
             {
               "xml": "<feature name=\"NativeGeocoder\"><param name=\"ios-package\" value=\"NativeGeocoder\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CordovaStripe\"><param name=\"ios-package\" value=\"CordovaStripe\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"OneSignalPush\"><param name=\"ios-package\" value=\"OneSignalPush\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Idfa\"><param name=\"ios-package\" value=\"IdfaPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SignInWithApple\"><param name=\"ios-package\" value=\"SignInWithApple\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
             {
@@ -180,70 +188,104 @@
             }
           ]
         }
+      },
+      "*/Entitlements-Debug.plist": {
+        "parents": {
+          "com.apple.developer.applesignin": [
+            {
+              "xml": "<array><string>Default</string></array>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "*/Entitlements-Release.plist": {
+        "parents": {
+          "com.apple.developer.applesignin": [
+            {
+              "xml": "<array><string>Default</string></array>",
+              "count": 1
+            }
+          ]
+        }
       }
     }
   },
   "installed_plugins": {
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.lachona.burgers"
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "com.lachona.burger"
     },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.lachona.burgers"
-    },
-    "cordova-plugin-geolocation": {
-      "GPS_REQUIRED": "true",
-      "PACKAGE_NAME": "com.lachona.burgers"
-    },
-    "cordova-plugin-stripe": {
-      "PACKAGE_NAME": "com.lachona.burgers"
-    },
-    "onesignal-cordova-plugin": {
-      "PACKAGE_NAME": "com.lachona.burgers"
-    },
-    "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "com.lachona.burgers"
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.lachona.burger"
     },
     "cordova-plugin-facebook4": {
       "APP_ID": "364418121794157",
       "APP_NAME": "La Chona Burguer",
       "FACEBOOK_HYBRID_APP_EVENTS": "false",
       "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0",
-      "PACKAGE_NAME": "com.lachona.burgers"
+      "PACKAGE_NAME": "com.lachona.burger"
     },
     "cordova-plugin-firebase-authentication": {
       "IOS_FIREBASE_POD_VERSION": "~> 8.8.0",
-      "PACKAGE_NAME": "com.lachona.burgers"
+      "PACKAGE_NAME": "com.lachona.burger"
     },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.lachona.burgers"
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true",
+      "PACKAGE_NAME": "com.lachona.burger"
     },
-    "cordova-plugin-add-swift-support": {
-      "PACKAGE_NAME": "com.lachona.burgers"
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.lachona.burger"
     },
     "cordova-plugin-nativegeocoder": {
       "LOCATION_WHEN_IN_USE_DESCRIPTION": "Use geocoder service",
-      "PACKAGE_NAME": "com.lachona.burgers"
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-stripe": {
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "onesignal-cordova-plugin": {
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-idfa": {
+      "PACKAGE_NAME": "com.lachona.burger"
+    },
+    "cordova-plugin-sign-in-with-apple": {
+      "PACKAGE_NAME": "com.lachona.burger"
     },
     "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "com.lachona.burgers"
+      "PACKAGE_NAME": "com.lachona.burger"
     }
   },
   "dependent_plugins": {},
   "modules": [
     {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
       "clobbers": [
-        "navigator.splashscreen"
+        "device"
       ]
     },
     {
-      "id": "cordova-plugin-statusbar.statusbar",
-      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-      "pluginId": "cordova-plugin-statusbar",
+      "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
+      "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
+      "pluginId": "cordova-plugin-facebook4",
       "clobbers": [
-        "window.StatusBar"
+        "facebookConnectPlugin"
+      ]
+    },
+    {
+      "id": "cordova-plugin-firebase-authentication.FirebaseAuthentication",
+      "file": "plugins/cordova-plugin-firebase-authentication/www/FirebaseAuthentication.js",
+      "pluginId": "cordova-plugin-firebase-authentication",
+      "merges": [
+        "cordova.plugins.firebase.auth"
       ]
     },
     {
@@ -279,6 +321,38 @@
       ]
     },
     {
+      "id": "cordova-plugin-ionic-keyboard.keyboard",
+      "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
+      "pluginId": "cordova-plugin-ionic-keyboard",
+      "clobbers": [
+        "window.Keyboard"
+      ]
+    },
+    {
+      "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
+      "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
+      "pluginId": "cordova-plugin-nativegeocoder",
+      "clobbers": [
+        "nativegeocoder"
+      ]
+    },
+    {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
+      ]
+    },
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
       "id": "cordova-plugin-stripe.stripe",
       "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
       "pluginId": "cordova-plugin-stripe",
@@ -295,43 +369,19 @@
       ]
     },
     {
-      "id": "cordova-plugin-ionic-keyboard.keyboard",
-      "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
-      "pluginId": "cordova-plugin-ionic-keyboard",
-      "clobbers": [
-        "window.Keyboard"
-      ]
-    },
-    {
-      "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
-      "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
-      "pluginId": "cordova-plugin-facebook4",
-      "clobbers": [
-        "facebookConnectPlugin"
-      ]
-    },
-    {
-      "id": "cordova-plugin-firebase-authentication.FirebaseAuthentication",
-      "file": "plugins/cordova-plugin-firebase-authentication/www/FirebaseAuthentication.js",
-      "pluginId": "cordova-plugin-firebase-authentication",
+      "id": "cordova-plugin-idfa.Idfa",
+      "file": "plugins/cordova-plugin-idfa/www/Idfa.js",
+      "pluginId": "cordova-plugin-idfa",
       "merges": [
-        "cordova.plugins.firebase.auth"
+        "cordova.plugins.idfa"
       ]
     },
     {
-      "id": "cordova-plugin-device.device",
-      "file": "plugins/cordova-plugin-device/www/device.js",
-      "pluginId": "cordova-plugin-device",
+      "id": "cordova-plugin-sign-in-with-apple.SignInWithApple",
+      "file": "plugins/cordova-plugin-sign-in-with-apple/www/sign-in-with-apple.js",
+      "pluginId": "cordova-plugin-sign-in-with-apple",
       "clobbers": [
-        "device"
-      ]
-    },
-    {
-      "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
-      "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
-      "pluginId": "cordova-plugin-nativegeocoder",
-      "clobbers": [
-        "nativegeocoder"
+        "cordova.plugins.SignInWithApple"
       ]
     },
     {
@@ -352,17 +402,19 @@
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-statusbar": "2.4.2",
-    "cordova-plugin-geolocation": "4.1.0",
-    "cordova-plugin-stripe": "1.5.3",
-    "onesignal-cordova-plugin": "2.11.1",
-    "cordova-plugin-ionic-keyboard": "2.2.0",
+    "cordova-plugin-add-swift-support": "2.0.2",
+    "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "6.4.0",
     "cordova-plugin-firebase-authentication": "5.1.0",
-    "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-add-swift-support": "2.0.2",
+    "cordova-plugin-geolocation": "4.1.0",
+    "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-nativegeocoder": "3.4.1",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-stripe": "1.5.3",
+    "onesignal-cordova-plugin": "2.11.1",
+    "cordova-plugin-idfa": "2.0.0",
+    "cordova-plugin-sign-in-with-apple": "0.1.2",
     "cordova-plugin-ionic-webview": "5.0.0"
   }
 }

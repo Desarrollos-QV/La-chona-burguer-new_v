@@ -86,8 +86,7 @@ export class SetaddressPage implements OnInit {
         "lng"          : data.results[0].geometry.location.lng,
         "address"      : this.LocationNow
       }); 
-    });
-   
+    }); 
   }
 
   search(ev)
@@ -170,30 +169,42 @@ export class SetaddressPage implements OnInit {
     });
     await loading.present();
 
-    if (type == 'LocationNow') {
-      var allData = {
-        address : item.address,
-        lat : this.lat,
-        lng : this.lng,
-        user_id : localStorage.getItem('user_id')
-      }  
+    if (localStorage.getItem('user_id')) {
+      
+      if (type == 'LocationNow') {
+        var allData = {
+          address : item.address,
+          lat : this.lat,
+          lng : this.lng,
+          user_id : localStorage.getItem('user_id') ? localStorage.getItem('user_id') : 0
+        }  
 
-      this.server.saveAddress(allData).subscribe((response:any) => {
-        if (response.msg == 'done') {
-          localStorage.setItem("address",item.address,);
-          localStorage.setItem('address_id',response.id);
-          localStorage.setItem("current_lat",this.lat);
-          localStorage.setItem('current_lng',this.lng);
-        
-          this.nav.navigateForward('home');
-          this.presentToast("Dirección guardada con éxito.",'success');  
-        }else {
-          this.presentToast(JSON.stringify(response.data),'danger');  
-        }
-        
+        this.server.saveAddress(allData).subscribe((response:any) => {
+          if (response.msg == 'done') {
+            localStorage.setItem("address",item.address,);
+            localStorage.setItem('address_id',response.id);
+            localStorage.setItem("current_lat",this.lat);
+            localStorage.setItem('current_lng',this.lng);
+          
+            this.nav.navigateForward('home');
+            this.presentToast("Dirección guardada con éxito.",'success');  
+          }else {
+            this.presentToast(JSON.stringify(response.data),'danger');  
+          }
+          
+          loading.dismiss();
+        });
+      }else{
+        localStorage.setItem("address",item.address);
+        localStorage.setItem('address_id',item.id);
+        localStorage.setItem("current_lat",item.lat);
+        localStorage.setItem('current_lng',item.lng);
+          
+        this.nav.navigateForward('home');
+        this.presentToast("Dirección guardada con éxito.",'success');
         loading.dismiss();
-      });
-    }else{
+      }
+    }else {
       localStorage.setItem("address",item.address);
       localStorage.setItem('address_id',item.id);
       localStorage.setItem("current_lat",item.lat);

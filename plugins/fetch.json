@@ -2,7 +2,7 @@
   "cordova-plugin-splashscreen": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-splashscreen@^5.0.2"
+      "id": "cordova-plugin-splashscreen@5.0.2"
     },
     "is_top_level": true,
     "variables": {}
@@ -10,7 +10,7 @@
   "cordova-plugin-statusbar": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-statusbar@^2.4.2"
+      "id": "cordova-plugin-statusbar@2.4.2"
     },
     "is_top_level": true,
     "variables": {}
@@ -18,25 +18,17 @@
   "cordova-plugin-geolocation": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-geolocation@^4.1.0"
+      "id": "cordova-plugin-geolocation@4.1.0"
     },
     "is_top_level": true,
     "variables": {
       "GPS_REQUIRED": "true"
     }
   },
-  "card.io.cordova.mobilesdk": {
-    "source": {
-      "type": "registry",
-      "id": "card.io.cordova.mobilesdk@2.1.0"
-    },
-    "is_top_level": false,
-    "variables": {}
-  },
   "cordova-plugin-stripe": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-stripe@^1.5.3"
+      "id": "cordova-plugin-stripe"
     },
     "is_top_level": true,
     "variables": {}
@@ -44,7 +36,7 @@
   "onesignal-cordova-plugin": {
     "source": {
       "type": "registry",
-      "id": "onesignal-cordova-plugin@^2.11.1"
+      "id": "onesignal-cordova-plugin@2.11.1"
     },
     "is_top_level": true,
     "variables": {}
@@ -52,7 +44,7 @@
   "cordova-plugin-ionic-keyboard": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-ionic-keyboard@^2.2.0"
+      "id": "cordova-plugin-ionic-keyboard@^2.0.5"
     },
     "is_top_level": true,
     "variables": {}
@@ -60,7 +52,7 @@
   "cordova-plugin-facebook4": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-facebook4@^6.4.0"
+      "id": "cordova-plugin-facebook4"
     },
     "is_top_level": true,
     "variables": {
@@ -73,17 +65,25 @@
   "cordova-plugin-firebase-authentication": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-firebase-authentication@^5.1.0"
+      "id": "cordova-plugin-firebase-authentication"
     },
     "is_top_level": true,
     "variables": {
       "IOS_FIREBASE_POD_VERSION": "~> 8.8.0"
     }
   },
+  "card.io.cordova.mobilesdk": {
+    "source": {
+      "type": "registry",
+      "id": "card.io.cordova.mobilesdk@2.1.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
   "cordova-plugin-device": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-device@^2.0.2"
+      "id": "cordova-plugin-device@2.0.2"
     },
     "is_top_level": true,
     "variables": {}
@@ -91,7 +91,7 @@
   "cordova-plugin-nativegeocoder": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-nativegeocoder@^3.4.1"
+      "id": "cordova-plugin-nativegeocoder"
     },
     "is_top_level": true,
     "variables": {
@@ -103,13 +103,29 @@
       "type": "registry",
       "id": "cordova-plugin-add-swift-support@2.0.2"
     },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-idfa": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-idfa@^2.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-sign-in-with-apple": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-sign-in-with-apple@^0.1.2"
+    },
     "is_top_level": true,
     "variables": {}
   },
   "cordova-plugin-ionic-webview": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-ionic-webview@latest"
+      "id": "cordova-plugin-ionic-webview@5.0.0"
     },
     "is_top_level": true,
     "variables": {}

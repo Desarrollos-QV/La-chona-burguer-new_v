@@ -1,19 +1,27 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
       "clobbers": [
-        "navigator.splashscreen"
+        "device"
       ]
     },
     {
-      "id": "cordova-plugin-statusbar.statusbar",
-      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-      "pluginId": "cordova-plugin-statusbar",
+      "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
+      "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
+      "pluginId": "cordova-plugin-facebook4",
       "clobbers": [
-        "window.StatusBar"
+        "facebookConnectPlugin"
+      ]
+    },
+    {
+      "id": "cordova-plugin-firebase-authentication.FirebaseAuthentication",
+      "file": "plugins/cordova-plugin-firebase-authentication/www/FirebaseAuthentication.js",
+      "pluginId": "cordova-plugin-firebase-authentication",
+      "merges": [
+        "cordova.plugins.firebase.auth"
       ]
     },
     {
@@ -49,6 +57,38 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+      "id": "cordova-plugin-ionic-keyboard.keyboard",
+      "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
+      "pluginId": "cordova-plugin-ionic-keyboard",
+      "clobbers": [
+        "window.Keyboard"
+      ]
+    },
+    {
+      "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
+      "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
+      "pluginId": "cordova-plugin-nativegeocoder",
+      "clobbers": [
+        "nativegeocoder"
+      ]
+    },
+    {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
+      ]
+    },
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
       "id": "cordova-plugin-stripe.stripe",
       "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
       "pluginId": "cordova-plugin-stripe",
@@ -65,43 +105,19 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-ionic-keyboard.keyboard",
-      "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
-      "pluginId": "cordova-plugin-ionic-keyboard",
-      "clobbers": [
-        "window.Keyboard"
-      ]
-    },
-    {
-      "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
-      "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
-      "pluginId": "cordova-plugin-facebook4",
-      "clobbers": [
-        "facebookConnectPlugin"
-      ]
-    },
-    {
-      "id": "cordova-plugin-firebase-authentication.FirebaseAuthentication",
-      "file": "plugins/cordova-plugin-firebase-authentication/www/FirebaseAuthentication.js",
-      "pluginId": "cordova-plugin-firebase-authentication",
+      "id": "cordova-plugin-idfa.Idfa",
+      "file": "plugins/cordova-plugin-idfa/www/Idfa.js",
+      "pluginId": "cordova-plugin-idfa",
       "merges": [
-        "cordova.plugins.firebase.auth"
+        "cordova.plugins.idfa"
       ]
     },
     {
-      "id": "cordova-plugin-device.device",
-      "file": "plugins/cordova-plugin-device/www/device.js",
-      "pluginId": "cordova-plugin-device",
+      "id": "cordova-plugin-sign-in-with-apple.SignInWithApple",
+      "file": "plugins/cordova-plugin-sign-in-with-apple/www/sign-in-with-apple.js",
+      "pluginId": "cordova-plugin-sign-in-with-apple",
       "clobbers": [
-        "device"
-      ]
-    },
-    {
-      "id": "cordova-plugin-nativegeocoder.NativeGeocoder",
-      "file": "plugins/cordova-plugin-nativegeocoder/www/NativeGeocoder.js",
-      "pluginId": "cordova-plugin-nativegeocoder",
-      "clobbers": [
-        "nativegeocoder"
+        "cordova.plugins.SignInWithApple"
       ]
     },
     {
@@ -122,17 +138,19 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-statusbar": "2.4.2",
-    "cordova-plugin-geolocation": "4.1.0",
-    "cordova-plugin-stripe": "1.5.3",
-    "onesignal-cordova-plugin": "2.11.1",
-    "cordova-plugin-ionic-keyboard": "2.2.0",
+    "cordova-plugin-add-swift-support": "2.0.2",
+    "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "6.4.0",
     "cordova-plugin-firebase-authentication": "5.1.0",
-    "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-add-swift-support": "2.0.2",
+    "cordova-plugin-geolocation": "4.1.0",
+    "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-nativegeocoder": "3.4.1",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-stripe": "1.5.3",
+    "onesignal-cordova-plugin": "2.11.1",
+    "cordova-plugin-idfa": "2.0.0",
+    "cordova-plugin-sign-in-with-apple": "0.1.2",
     "cordova-plugin-ionic-webview": "5.0.0"
   };
 });

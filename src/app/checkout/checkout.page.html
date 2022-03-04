@@ -57,6 +57,12 @@
       </ion-item>
 
 
+      <ion-item style="font-size: 13px" *ngIf="paypal_id">
+      <ion-label><img src="assets/paypal.png" style="width: 90px"> <span style="margin-top: -40px">Pay Via Paypal</span></ion-label>
+      <ion-radio slot="start" value="2" (ionSelect)="setPayment(2)" ></ion-radio>
+      </ion-item>
+
+
       <ion-item style="font-size: 13px" *ngIf="stripe_id">
         <ion-label><img src="assets/stripe.png" style="width: 150px"> <span style="margin-top: -40px">Pay Via Stripe</span></ion-label>
         <ion-radio slot="start" value="2" (ionSelect)="setPayment(3)" ></ion-radio>

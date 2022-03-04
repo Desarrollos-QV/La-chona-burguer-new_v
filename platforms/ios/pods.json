@@ -12,12 +12,6 @@
         }
     },
     "libraries": {
-        "OneSignal": {
-            "name": "OneSignal",
-            "type": "podspec",
-            "spec": "2.15.2",
-            "count": 1
-        },
         "FBSDKCoreKit": {
             "name": "FBSDKCoreKit",
             "spec": "5.15.0",
@@ -36,6 +30,12 @@
         "Firebase/Auth": {
             "name": "Firebase/Auth",
             "spec": "~> 8.8.0",
+            "count": 1
+        },
+        "OneSignal": {
+            "name": "OneSignal",
+            "type": "podspec",
+            "spec": "2.15.2",
             "count": 1
         }
     }

@@ -2,11 +2,14 @@ import { Component, Renderer2,Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform,NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx'; 
 import { EventsService } from './service/events.service';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { ServerService } from './service/server.service';
+ 
+declare var window: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,7 +18,7 @@ import { ServerService } from './service/server.service';
 export class AppComponent {
   
   appType:number = 0;
-  dir:any = "ltr";
+  dir:string = "ltr";
   text:any;
   apiKey: any;
   public appPages:any = [];
@@ -25,7 +28,7 @@ export class AppComponent {
   data:any;
   constructor(
     public server : ServerService,
-    private platform: Platform,
+    private platform: Platform, 
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public nav : NavController,
@@ -46,108 +49,98 @@ export class AppComponent {
       this.admin = type;
     });
 
+    this.events.subscribe('user_login', (id) => {
+      this.subPush(id);
+    });
 
-    if(localStorage.getItem('admin'))
-    {
-      this.admin = JSON.parse(localStorage.getItem('admin'));
-    }
+    this.events.subscribe('text', (text) => {     
+      this.text = text;
+
+      this.appPages = [
+        {
+          title: text.home,
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: text.city,
+          url: '/city',
+          icon: 'pin'
+        }, 
+        {
+          title: text.account,
+          url: '/profile',
+          icon: 'person'
+        },
+        {
+          title: text.order,
+          url: '/order',
+          icon: 'cart'
+        }
+      ];
+    });
+
+    if(localStorage.getItem('admin')) this.admin = JSON.parse(localStorage.getItem('admin'));
 
     if(localStorage.getItem('app_text'))
     {
       this.text = JSON.parse(localStorage.getItem('app_text'));
 
       this.appPages = [
-      {
-        title: this.text.home,
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: this.text.city,
-        url: '/city',
-        icon: 'pin'
-      },
-      {
-        title: this.text.account,
-        url: '/profile',
-        icon: 'person'
-      },
-      {
-        title: this.text.order,
-        url: '/order',
-        icon: 'cart'
-      },
+        {
+          title: this.text.home,
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: this.text.city,
+          url: '/city',
+          icon: 'pin'
+        },
+        {
+          title: this.text.account,
+          url: '/profile',
+          icon: 'person'
+        },
+        {
+          title: this.text.order,
+          url: '/order',
+          icon: 'cart'
+        }
 
-  ];
-      
+      ]; 
     }
     else
     {
       var home:any      = "Home";
-      var city:any      = "Change City";
-      var lang:any      = "Language";
+      var city:any      = "Change City"; 
       var profile:any   = "My Account";
       var order:any     = "My Orders";
 
       this.appPages = [
-      {
-        title: home,
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: city,
-        url: '/city',
-        icon: 'pin'
-      },
-      {
-        title: profile,
-        url: '/profile',
-        icon: 'person'
-      },
-      {
-        title: order,
-        url: '/order',
-        icon: 'cart'
-      },
-
-  ];
+        {
+          title: home,
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: city,
+          url: '/city',
+          icon: 'pin'
+        },
+        {
+          title: profile,
+          url: '/profile',
+          icon: 'person'
+        },
+        {
+          title: order,
+          url: '/order',
+          icon: 'cart'
+        }
+      ];
     }
-
-    this.events.subscribe('text', (text) => {
-      
-      this.text = text;
-
-      this.appPages = [
-      {
-        title: text.home,
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: text.city,
-        url: '/city',
-        icon: 'pin'
-      },
-      // {
-      //   title: text.language,
-      //   url: '/lang',
-      //   icon: 'flag'
-      // },
-      {
-        title: text.account,
-        url: '/profile',
-        icon: 'person'
-      },
-      {
-        title: text.order,
-        url: '/order',
-        icon: 'cart'
-      },
-
-  ];
-
-    });
+ 
     
     if(localStorage.getItem('app_type'))
     {
@@ -158,21 +151,11 @@ export class AppComponent {
       else
       {
          this.dir = "ltr";
-      }
-      
+      } 
     }
-
-
-
+ 
 
     this.initializeApp();
-
-    this.events.subscribe('user_login', (id) => {
-
-    this.subPush(id);
-
-    });
-
   }
 
   assginAppType(ty)
@@ -186,10 +169,40 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString("#ffffff");
       this.statusBar.styleDefault();
-      this.subPush();
-    });
-
+      this.subPush(); 
+      
+      if (this.platform.is('ios')) {
+        this.showAppTrackingTransparency();
+      } else {
+        // Show custom message
+      }
+    }); 
   }
+
+  private showAppTrackingTransparency() {
+    const idfaPlugin = window.cordova.plugins.idfa;
+    
+    idfaPlugin.getInfo().then((info) => {
+      if (!info.trackingLimited) {
+        return info.idfa || info.aaid;
+      } else if (
+        info.trackingPermission ===
+        idfaPlugin.TRACKING_PERMISSION_NOT_DETERMINED
+      ) {
+        return idfaPlugin.requestPermission().then((result) => {
+          if (result === idfaPlugin.TRACKING_PERMISSION_AUTHORIZED) {
+  
+            // Start your tracking plugin here!
+  
+            return idfaPlugin.getInfo().then((info) => {
+              return info.idfa || info.aaid;
+            });
+          }
+        });
+      }
+    });
+  }
+ 
 
   subPush(id = 0)
   {
@@ -216,14 +229,13 @@ export class AppComponent {
   }
 
   this.oneSignal.endInit();
-  }
-
+  } 
   
   logout()
   {
     localStorage.setItem('user_id',null);
-
-    this.nav.navigateForward('/login');
+    localStorage.removeItem('user_id');
+    this.nav.navigateForward('/welcome');
   }
     
   async loadData(city_id)
